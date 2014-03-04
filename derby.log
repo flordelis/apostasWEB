@@ -1,0 +1,10 @@
+----------------------------------------------------------------
+Mon Mar 03 22:00:47 BRT 2014:
+ Inicializando o Derby versão The Apache Software Foundation - Apache Derby - 10.9.1.0 - (1344872): instância a816c00e-0144-8a9b-6f76-0000021623e0
+no diretório de banco de dados /home/lisy/Arquivos/Development/java/workspace/NetBeansProjects/BolaoTeste3/myDerby  
+
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_25-b30
+user.dir=/home/lisy/Arquivos/Development/java/workspace/NetBeansProjects/BolaoTeste3
+derby.system.home=null
+Carregador de classe do banco de dados iniciado - derby.database.classpath=''
