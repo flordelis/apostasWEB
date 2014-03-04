@@ -11,10 +11,17 @@ package br.ifba.pweb.bolao.beans;
  * @author lisy
  */
 public class Usuario {
-    private int id;
+    private final int id;
     private int login;
     private String senha;
-    private Perfil perfil;
+    private final Perfil perfil;
+
+    public Usuario(int id, int login, String senha, Perfil perfil) {
+        this.id = id;
+        this.login = login;
+        this.senha = senha;
+        this.perfil = perfil;
+    }
 
     @Override
     public String toString() {
@@ -24,11 +31,12 @@ public class Usuario {
     public int getId() {
         return id;
     }
-
-    public void setId(int id) {
-        this.id = id;
+ 
+    
+    public Perfil getPerfil() {
+        return perfil;
     }
-
+    
     public int getLogin() {
         return login;
     }
@@ -44,13 +52,4 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
-    public Perfil getPerfil() {
-        return perfil;
-    }
-
-    public void setPerfil(Perfil perfil) {
-        this.perfil = perfil;
-    }
-    
-}
+ }
