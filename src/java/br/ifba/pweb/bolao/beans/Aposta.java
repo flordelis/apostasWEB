@@ -14,7 +14,7 @@ import java.util.Calendar;
  */
 public class Aposta {
     private int id;
-    private Perfil perfil;
+    private Perfil jogador;
     private Calendar data_criada;
     private Partida partida;
     private int palpite1;
@@ -23,7 +23,7 @@ public class Aposta {
 
     @Override
     public String toString() {
-        return "Aposta{" + "id=" + id + ", perfil=" + perfil + ", data_criada=" + data_criada + ", partida=" + partida + ", palpite1=" + palpite1 + ", palpite2=" + palpite2 + ", status=" + status + '}';
+        return "Aposta{" + "id=" + id + ", perfil=" + jogador + ", data_criada=" + data_criada + ", partida=" + partida + ", palpite1=" + palpite1 + ", palpite2=" + palpite2 + ", status=" + status + '}';
     }
 
     public int getId() {
@@ -34,12 +34,12 @@ public class Aposta {
         this.id = id;
     }
 
-    public Perfil getPerfil() {
-        return perfil;
+    public Perfil getJogador() {
+        return jogador;
     }
 
-    public void setPerfil(Perfil perfil) {
-        this.perfil = perfil;
+    public void setJogador(Perfil perfil) {
+        this.jogador = perfil;
     }
 
     public Calendar getData_criada() {

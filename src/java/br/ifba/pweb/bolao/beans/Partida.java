@@ -14,7 +14,7 @@ import java.util.Calendar;
  * @author lisy
  */
 public class Partida {
-    private int id;
+    private final int id;
     private String fase;
     private Sede sede;
     private Calendar data_horario;
@@ -28,13 +28,19 @@ public class Partida {
         return "Partida{" + "id=" + id + ", fase=" + fase + ", sede=" + sede + ", data_horario=" + data_horario + ", adver1=" + adver1 + ", adver2=" + adver2 + ", placar1=" + placar1 + ", placar2=" + placar2 + '}';
     }
 
+    public Partida(int id, String fase, Sede sede, Calendar data_horario, Nacao adver1, Nacao adver2) {
+        this.id = id;
+        this.fase = fase;
+        this.sede = sede;
+        this.data_horario = data_horario;
+        this.adver1 = adver1;
+        this.adver2 = adver2;
+    }
+
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getFase() {
         return fase;

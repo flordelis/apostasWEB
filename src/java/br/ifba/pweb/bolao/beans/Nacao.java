@@ -11,9 +11,17 @@ package br.ifba.pweb.bolao.beans;
  * @author lisy
  */
 public class Nacao {
-  private int id;
-  private String nome;  
+  private final int id;
+  private final String nome;  
 
+    
+
+    public Nacao(int id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+    
+    
     @Override
     public String toString() {
         return "Nacao{" + "id=" + id + ", nome=" + nome + '}';
@@ -23,16 +31,9 @@ public class Nacao {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
+    
     public String getNome() {
         return nome;
     }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-    
+      
 }
