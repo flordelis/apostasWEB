@@ -9,6 +9,8 @@ package br.ifba.pweb.bolao.model;
 import br.ifba.pweb.bolao.beans.Aposta;
 import br.ifba.pweb.bolao.beans.Partida;
 import br.ifba.pweb.bolao.beans.Perfil;
+import br.ifba.pweb.bolao.persistence.derby.DbDAOAposta;
+import br.ifba.pweb.bolao.persistence.derby.DbDAOPerfil;
 import br.ifba.pweb.bolao.persistence.IDAOAposta;
 import br.ifba.pweb.bolao.persistence.IDAOPerfil;
 import java.util.Set;
@@ -20,16 +22,17 @@ import java.util.Set;
 public class DistribuidorRecompensa {
     
     private final Set <Perfil> vencedores;
-    IDAOAposta pdao;
+    IDAOAposta adao;
     private int valorTotal;
     private final Partida partida;
     Set<Aposta> apostas;
     int recompensa;
+    IDAOPerfil pdao;
 
     public DistribuidorRecompensa(Set <Perfil> vencedores, Partida partida) throws Exception {
         this.vencedores=vencedores;
         this.partida=partida;
-        IDAOAposta adao= new DbBDAposta();
+        adao= new DbDAOAposta();
         apostas=adao.recuperarPelaIdPartida(partida.getId());
         this.valorTotal=0;
         this.calculaValorTotal();
@@ -39,8 +42,9 @@ public class DistribuidorRecompensa {
     
     
     public void distribuir() throws Exception{
+         pdao= new DbDAOPerfil();
          for(Perfil vencedor: vencedores){
-         vencedor.addCredito(valorTotal);
+              pdao.altualizarCredito(recompensa, vencedor);
         }
     }
       
