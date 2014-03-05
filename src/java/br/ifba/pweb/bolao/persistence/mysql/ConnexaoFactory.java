@@ -20,7 +20,7 @@ public class ConnexaoFactory {
      private static final String USER = "helis";
      private static final String PASSWORD="1234";
      //private static final String DRIVER="com.mysql.jdbc.Driver";
-    public Connection getConnection() throws ClassNotFoundException{
+    public Connection getConnection() {
       System.out.println("Conectando ao Banco de Dados...");
         try{
          //Class.forName(DRIVER);
