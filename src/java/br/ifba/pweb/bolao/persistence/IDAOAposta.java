@@ -20,14 +20,14 @@ public interface IDAOAposta {
     public void salvar(Aposta a)throws Exception;
     public void atualizarStatus(Aposta a)throws Exception;
     public Aposta recuperarPorId(int id) throws Exception;
-    public Set<Aposta> recuperarPelaData(Date data)throws Exception;
+    Set<Aposta> recuperarPelaData(Date data)throws Exception;
     public Set<Aposta> recuperarPelaIdPartida(int idpartida)throws Exception;
     public Set<Aposta> recuperarPeloIdPerfil(int idperfil)throws Exception;
-    public Set<Aposta> recuperarPeloIdPerfilAndData(int idperfil, Date data)throws Exception;
-    public Set<Aposta> recuperarPeloIdPerfilAndPartida(int idperfil, int idpartida)throws Exception;
+    //public Set<Aposta> recuperarPeloIdPerfilAndData(int idperfil, Date data)throws Exception;
+    public Aposta recuperarPeloIdPerfilAndPartida(int idperfil, int idpartida)throws Exception;
     public Set<Aposta> recuperarPeloStatus(String status)throws Exception;
     public Set<Aposta> recuperarPeloStatusAndIdPerfil(String status, int idPerfil)throws Exception;
-    public Set<Aposta> recuperarPeloStatusAndData(String status, Date data)throws Exception;
+   //  public Set<Aposta> recuperarPeloStatusAndData(String status, Date data)throws Exception;
     public Set<Aposta> recuperarTodos()throws Exception;
     
 }

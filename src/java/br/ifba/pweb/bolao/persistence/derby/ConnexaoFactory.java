@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package br.ifba.pweb.bolao.persistence;
+package br.ifba.pweb.bolao.persistence.derby;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

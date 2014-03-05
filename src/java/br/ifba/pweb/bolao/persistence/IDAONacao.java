@@ -14,6 +14,7 @@ import java.util.Set;
  * @author lisy
  */
 public interface IDAONacao {
+     public Nacao recuperarPeloId(int id)throws Exception;
      public Set<Nacao> recuperarTodos()throws Exception;
     
 }

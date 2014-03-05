@@ -14,6 +14,11 @@ public class Nacao {
   private  int id;
   private  String nome;  
 
+    public Nacao(int id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+
     public void setId(int id) {
         this.id = id;
     }

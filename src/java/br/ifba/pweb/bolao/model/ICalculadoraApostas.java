@@ -4,12 +4,17 @@
  * and open the template in the editor.
  */
 
-package br.ifba.pweb.bolao.persistence.derby;
+package br.ifba.pweb.bolao.model;
+
+import br.ifba.pweb.bolao.beans.Perfil;
+import java.util.Set;
 
 /**
  *
  * @author lisy
  */
-public class DbPartida {
+public interface ICalculadoraApostas {
+
+    Set<Perfil> calculaVencedor() throws Exception;
     
 }

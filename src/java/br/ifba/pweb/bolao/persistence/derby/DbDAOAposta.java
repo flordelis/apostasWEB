@@ -7,8 +7,6 @@
 package br.ifba.pweb.bolao.persistence.derby;
 
 import br.ifba.pweb.bolao.beans.Aposta;
-import br.ifba.pweb.bolao.beans.Perfil;
-import br.ifba.pweb.bolao.persistence.ConnexaoFactory;
 import br.ifba.pweb.bolao.persistence.IDAOAposta;
 import br.ifba.pweb.bolao.persistence.IDAOPartida;
 import br.ifba.pweb.bolao.persistence.IDAOPerfil;
@@ -17,9 +15,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -75,8 +70,7 @@ public class DbDAOAposta implements IDAOAposta{
     @Override
     public Aposta recuperarPorId(int id) throws Exception {
         Aposta a = null;
-        int id_partida;
-        int id_perfil;
+      
         String SQL="Select * from \"aposta\" WHERE \"id\"=?";
         try {
             
@@ -86,13 +80,12 @@ public class DbDAOAposta implements IDAOAposta{
             ResultSet rs = stmt.executeQuery();
             
             while(rs.next()){
-               id_partida=rs.getInt("id_partida");
-               id_perfil=rs.getInt("id_perfil");
+              
                
                IDAOPartida pdao= new DbDAOPartida();
                IDAOPerfil pfdao= new DbDAOPerfil();
                
-               a = new Aposta(pfdao.recuperarPeloId(id_perfil),pdao.recuperarPeloId(id_partida), rs.getInt("palpite1"), rs.getInt("palpite2"));
+               a = new Aposta(pfdao.recuperarPeloId(rs.getInt("\"id_perfil\"")),pdao.recuperarPeloId(rs.getInt("\"id_partida\"")), rs.getInt("\"palpite1\""), rs.getInt("\"palpite2\""));
                a.setData_criada(rs.getDate("data_criada"));
                a.setId(rs.getInt("id"));
             
@@ -110,9 +103,7 @@ public class DbDAOAposta implements IDAOAposta{
     @Override
     public Set<Aposta> recuperarPelaData(Date data) throws Exception {
         Set<Aposta> a=new HashSet();
-        int id_partida;
-        int id_perfil;
-        
+            
         String SQL="Select * from \"aposta\" WHERE \"data_criada\"=?";
         
         try {
@@ -123,13 +114,12 @@ public class DbDAOAposta implements IDAOAposta{
             ResultSet rs = stmt.executeQuery();
             
             while(rs.next()){
-               id_partida=rs.getInt("id_partida");
-               id_perfil=rs.getInt("id_perfil");
                
+           
                IDAOPartida pdao= new DbDAOPartida();
                IDAOPerfil pfdao= new DbDAOPerfil();
                
-               a.add(new Aposta(pfdao.recuperarPeloId(id_perfil),pdao.recuperarPeloId(id_partida), rs.getInt("palpite1"), rs.getInt("palpite2")));
+               a.add(new Aposta(pfdao.recuperarPeloId(rs.getInt("\"id_perfil\"")),pdao.recuperarPeloId(rs.getInt("\"id_partida\"")), rs.getInt("\"palpite1\""), rs.getInt("\"palpite2\"")));
                for(Aposta ap:a){
                ap.setData_criada(data);
                ap.setId(rs.getInt("id"));
@@ -151,8 +141,7 @@ public class DbDAOAposta implements IDAOAposta{
         
         Set<Aposta> a=new HashSet();
         int id_perfil;
-        Calendar cal;
-        cal.getInstance();
+               
         String SQL="Select * from \"aposta\" WHERE \"id_partida\"=?";
         
         try {
@@ -163,12 +152,186 @@ public class DbDAOAposta implements IDAOAposta{
             ResultSet rs = stmt.executeQuery();
             
             while(rs.next()){
-               id_perfil=rs.getInt("id_perfil");
+               id_perfil=rs.getInt("\"id_perfil\"");
                
                IDAOPartida pdao= new DbDAOPartida();
                IDAOPerfil pfdao= new DbDAOPerfil();
                
-               a.add(new Aposta(pfdao.recuperarPeloId(id_perfil),pdao.recuperarPeloId(idPartida), rs.getInt("palpite1"), rs.getInt("palpite2")));
+               a.add(new Aposta(pfdao.recuperarPeloId(id_perfil),pdao.recuperarPeloId(idPartida), rs.getInt("\"palpite1\""), rs.getInt("\"palpite2\"")));
+               for(Aposta ap:a){
+               ap.setData_criada(rs.getDate("data_criada"));
+               ap.setId(rs.getInt("id"));
+               }
+            }
+            
+           } catch (SQLException e) {
+               throw new RuntimeException(e);
+        }finally{
+          this.connection.close();
+        }
+        
+        return a;
+    } 
+
+    @Override
+    public Set<Aposta> recuperarPeloIdPerfil(int idperfil) throws Exception {
+        Set<Aposta> a=new HashSet();
+        int id_perfil;
+               
+        String SQL="Select * from \"aposta\" WHERE \"id_perfil\"=?";
+        
+        try {
+            
+            
+            PreparedStatement stmt = this.connection.prepareStatement(SQL);      
+            stmt.setInt(1, idperfil);
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()){
+               id_perfil=rs.getInt("\"id_perfil\"");
+               
+               IDAOPartida pdao= new DbDAOPartida();
+               IDAOPerfil pfdao= new DbDAOPerfil();
+               
+               a.add(new Aposta(pfdao.recuperarPeloId(id_perfil),pdao.recuperarPeloId(rs.getInt("\"id_partida\"")), rs.getInt("\"palpite1\""), rs.getInt("\"palpite2\"")));
+               for(Aposta ap:a){
+               ap.setData_criada(rs.getDate("data_criada"));
+               ap.setId(rs.getInt("id"));
+               }
+            }
+            
+           } catch (SQLException e) {
+               throw new RuntimeException(e);
+        }finally{
+          this.connection.close();
+        }
+        
+        return a;
+    } 
+
+    @Override
+    public Aposta recuperarPeloIdPerfilAndPartida(int idperfil, int idpartida) throws Exception {
+        Aposta a=null;
+                    
+        String SQL="Select * from \"aposta\" WHERE \"id_partida\"=? AND \"id_perfil\"=?";
+        
+        try {
+            
+            
+            PreparedStatement stmt = this.connection.prepareStatement(SQL);      
+            stmt.setInt(1, idpartida);
+             stmt.setInt(1, idperfil);
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                      
+               IDAOPartida pdao= new DbDAOPartida();
+               IDAOPerfil pfdao= new DbDAOPerfil();
+               
+               a=new Aposta(pfdao.recuperarPeloId(idperfil),pdao.recuperarPeloId(idpartida), rs.getInt("\"palpite1\""), rs.getInt("\"palpite2\""));
+               a.setData_criada(rs.getDate("data_criada"));
+               a.setId(rs.getInt("id"));
+               }
+            
+            
+           } catch (SQLException e) {
+               throw new RuntimeException(e);
+        }finally{
+          this.connection.close();
+        }
+        
+        return a;
+    } 
+
+    @Override
+    public Set<Aposta> recuperarPeloStatus(String status) throws Exception {
+       Set<Aposta> a=new HashSet();
+                      
+        String SQL="Select * from \"aposta\" WHERE \"status\"=?";
+        
+        try {
+            
+            
+            PreparedStatement stmt = this.connection.prepareStatement(SQL);      
+            stmt.setString(1, status);
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                           
+               IDAOPartida pdao= new DbDAOPartida();
+               IDAOPerfil pfdao= new DbDAOPerfil();
+               
+               a.add(new Aposta(pfdao.recuperarPeloId(rs.getInt("\"id_perfil\"")),pdao.recuperarPeloId(rs.getInt("\"id_partida\"")), rs.getInt("\"palpite1\""), rs.getInt("\"palpite2\"")));
+               for(Aposta ap:a){
+               ap.setData_criada(rs.getDate("data_criada"));
+               ap.setId(rs.getInt("id"));
+               }
+            }
+            
+           } catch (SQLException e) {
+               throw new RuntimeException(e);
+        }finally{
+          this.connection.close();
+        }
+        
+        return a;
+    } 
+
+    @Override
+    public Set<Aposta> recuperarPeloStatusAndIdPerfil(String status, int idPerfil) throws Exception {
+        Set<Aposta> a=new HashSet();
+                  
+        String SQL="Select * from \"aposta\" WHERE \"status\"=? AND \"idPerfil\"=?";
+        
+        try {
+            
+            
+            PreparedStatement stmt = this.connection.prepareStatement(SQL);      
+            stmt.setInt(1, idPerfil);
+            stmt.setInt(2, idPerfil);
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                           
+               IDAOPartida pdao= new DbDAOPartida();
+               IDAOPerfil pfdao= new DbDAOPerfil();
+               
+               a.add(new Aposta(pfdao.recuperarPeloId(idPerfil),pdao.recuperarPeloId(rs.getInt("\"id_partida\"")), rs.getInt("\"palpite1\""), rs.getInt("\"palpite2\"")));
+               for(Aposta ap:a){
+               ap.setData_criada(rs.getDate("data_criada"));
+               ap.setId(rs.getInt("id"));
+               }
+            }
+            
+           } catch (SQLException e) {
+               throw new RuntimeException(e);
+        }finally{
+          this.connection.close();
+        }
+        
+        return a;
+    } 
+
+   
+
+    @Override
+    public Set<Aposta> recuperarTodos() throws Exception {
+        Set<Aposta> a=new HashSet();
+                  
+        String SQL="Select * from \"aposta\"";
+        
+        try {
+            
+            
+            PreparedStatement stmt = this.connection.prepareStatement(SQL);      
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                       
+               IDAOPartida pdao= new DbDAOPartida();
+               IDAOPerfil pfdao= new DbDAOPerfil();
+               
+               a.add(new Aposta(pfdao.recuperarPeloId(rs.getInt("\"id_perfil\"")),pdao.recuperarPeloId(rs.getInt("\"id_perfil\"")), rs.getInt("\"palpite1\""), rs.getInt("\"palpite2\"")));
                for(Aposta ap:a){
                ap.setData_criada(rs.getDate("data_criada"));
                ap.setId(rs.getInt("id"));
@@ -186,41 +349,5 @@ public class DbDAOAposta implements IDAOAposta{
     
     
 
-    @Override
-    public Set<Aposta> recuperarPeloIdPerfil(int idPerfil) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Set<Aposta> recuperarPeloIdPerfilAndData(int idPerfil, Calendar Date) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Set<Aposta> recuperarPeloIdPerfilAndPartida(int idPerfil, int idPartida) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Set<Aposta> recuperarPeloStatus(String status) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Set<Aposta> recuperarPeloStatusAndIdPerfil(String status, int idPerfil) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Set<Aposta> recuperarPeloStatusAndData(String status, Calendar data) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Set<Aposta> recuperarTodos() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    
     
 }

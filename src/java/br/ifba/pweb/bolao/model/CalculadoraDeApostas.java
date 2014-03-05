@@ -18,20 +18,21 @@ import java.util.Set;
  *
  * @author lisy
  */
-public class CalculadoraDeApostas{
+public class CalculadoraDeApostas implements ICalculadoraApostas{
     
     IDAOAposta adao;
     Set<Aposta> apostas;
     Partida partida;
 
     public CalculadoraDeApostas(Partida partida) throws Exception {
-      IDAOAposta adao= new DbDAOAposta();  
+      adao= new DbDAOAposta();  
       apostas= (Set<Aposta>) adao.recuperarPelaIdPartida(partida.getId());
         
     }
   
     
     
+    @Override
     public Set<Perfil> calculaVencedor() throws Exception{
         Set<Perfil> vencedores= new HashSet();
              
@@ -55,11 +56,13 @@ public class CalculadoraDeApostas{
       for(Aposta aposta: apostas){
           for(Perfil vencedor:vencedores){
           if(aposta.getJogador().getId()==vencedor.getId()){
-          adao.alteraStatusPeloIdPerfil("ganhou", aposta.getJogador().getId());
+          aposta.getJogador().setStatus("ganhou");
           }
           else{
-          adao.alteraStatusPeloIdPerfil("perdeu", aposta.getJogador().getId());
-                  }
+          aposta.getJogador().setStatus("perdeu");
+          }
+          
+          adao.atualizarStatus(aposta);
       }
       }
        

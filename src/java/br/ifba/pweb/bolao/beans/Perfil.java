@@ -86,6 +86,10 @@ public class Perfil {
     public Date getData_criacao() {
         return data_criacao;
     }
+
+    public void setStatus(String ganhou) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     

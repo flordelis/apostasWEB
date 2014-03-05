@@ -7,12 +7,12 @@
 package br.ifba.pweb.bolao.persistence.derby;
 
 import br.ifba.pweb.bolao.beans.Nacao;
-import br.ifba.pweb.bolao.persistence.ConnexaoFactory;
 import br.ifba.pweb.bolao.persistence.IDAONacao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -27,7 +27,7 @@ public class DbDAONacao implements IDAONacao{
     }
     @Override
     public Set<Nacao> recuperarTodos() throws Exception {
-        Set<Nacao> n=null;
+        Set<Nacao> n= new HashSet();
         String SQL="Select * from \"nacao\"";
         try {
             
@@ -36,13 +36,9 @@ public class DbDAONacao implements IDAONacao{
             ResultSet rs = stmt.executeQuery();
             
             while(rs.next()){
-               n.add(new Nacao());
+               n.add(new Nacao(rs.getInt("\"id\""),rs.getString("\"nome\"")));
                
-               for(Nacao na:n){
-               na.setId(rs.getInt("id"));
-               na.setNome(rs.getString("nome"));
-               }
-            }
+             }
             
            } catch (SQLException e) {
                throw new RuntimeException(e);
@@ -52,5 +48,30 @@ public class DbDAONacao implements IDAONacao{
         
         return n;
     
+    }
+
+    @Override
+    public Nacao recuperarPeloId(int id) throws Exception {
+        Nacao n=null;
+        String SQL="Select * from \"nacao\" where \"id\"=?";
+        try {
+            
+            
+            PreparedStatement stmt = this.connection.prepareStatement(SQL);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()){
+               n= new Nacao(id, rs.getString("\"nome\""));
+              }
+            
+            
+           } catch (SQLException e) {
+               throw new RuntimeException(e);
+        }finally{
+          this.connection.close();
+        }
+        
+        return n;
     }
 }

@@ -7,13 +7,12 @@
 package br.ifba.pweb.bolao.persistence.derby;
 
 import br.ifba.pweb.bolao.beans.Perfil;
-import br.ifba.pweb.bolao.beans.Usuario;
-import br.ifba.pweb.bolao.persistence.ConnexaoFactory;
 import br.ifba.pweb.bolao.persistence.IDAOPerfil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -100,7 +99,7 @@ public class DbDAOPerfil implements IDAOPerfil{
     @Override
     public Perfil recuperarPeloIdUsuario(int iduser) throws Exception {
          Perfil p=null;
-        String SQL="Select p.nome, p.data_criada, p.id, p.credito from \"perfil\" p, \"usuario\" u WHERE p.\"id\"==u.\"id_perfil\" and u.\"id_perfil\"= ?";
+        String SQL="Select \"p.nome\", \"p.data_criada\", \"p.id\", \"p.credito\" from \"perfil\" p, \"usuario\" u WHERE p.\"id\"==u.\"id_perfil\" and u.\"id_perfil\"= ?";
         try {
             
             
@@ -109,10 +108,10 @@ public class DbDAOPerfil implements IDAOPerfil{
             ResultSet rs = stmt.executeQuery();
             
             while(rs.next()){
-               p = new Perfil(rs.getString("p.nome"));
-               p.setData_criacao(rs.getDate("p.data_criada"));
-               p.setId(rs.getInt("p.id"));
-               p.setCredito(rs.getInt("p.credito"));
+               p = new Perfil(rs.getString("\"p.nome\""));
+               p.setData_criacao(rs.getDate("\"p.data_criada\""));
+               p.setId(rs.getInt("\"p.id\""));
+               p.setCredito(rs.getInt("\"p.credito\""));
             
             }
             
@@ -127,7 +126,7 @@ public class DbDAOPerfil implements IDAOPerfil{
 
     @Override
     public Set<Perfil> recuperarTodos() throws Exception {
-        Set<Perfil> p=null;
+        Set<Perfil> p= new HashSet();
         String SQL="Select * from \"perfil\" p";
         try {
             
@@ -136,12 +135,12 @@ public class DbDAOPerfil implements IDAOPerfil{
             ResultSet rs = stmt.executeQuery();
             
             while(rs.next()){
-               p.add(new Perfil(rs.getString("nome")));
+               p.add(new Perfil(rs.getString("\"nome\"")));
                
                for(Perfil pf:p){
-               pf.setData_criacao(rs.getDate("data_criada"));
-               pf.setId(rs.getInt("id"));
-               pf.setCredito(rs.getInt("credito"));
+               pf.setData_criacao(rs.getDate("\"data_criada\""));
+               pf.setId(rs.getInt("\"id\""));
+               pf.setCredito(rs.getInt("\"credito\""));
                }
             }
             

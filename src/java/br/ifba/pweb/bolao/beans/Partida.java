@@ -6,7 +6,7 @@
 
 package br.ifba.pweb.bolao.beans;
 
-import java.sql.Timestamp;
+import java.sql.Time;
 import java.util.Calendar;
 
 
@@ -15,33 +15,34 @@ import java.util.Calendar;
  * @author lisy
  */
 public class Partida {
-    private final int id;
+    private int id;
     private String fase;
     private Sede sede;
-    private Timestamp data_horario;
+    private Calendar data;
+    private Time horario;
     private Nacao adver1;
     private Nacao adver2;
     private int placar1;
     private int placar2;
 
-    @Override
-    public String toString() {
-        return "Partida{" + "id=" + id + ", fase=" + fase + ", sede=" + sede + ", data_horario=" + data_horario + ", adver1=" + adver1 + ", adver2=" + adver2 + ", placar1=" + placar1 + ", placar2=" + placar2 + '}';
-    }
-
-    public Partida(int id, String fase, Sede sede, Timestamp data_horario, Nacao adver1, Nacao adver2) {
-        this.id = id;
+    public Partida(String fase, Sede sede, Calendar data, Time horario, Nacao adver1, Nacao adver2) {
         this.fase = fase;
         this.sede = sede;
-        this.data_horario = data_horario;
+        this.data = data;
+        this.horario = horario;
         this.adver1 = adver1;
         this.adver2 = adver2;
+        
+        
     }
 
     public int getId() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getFase() {
         return fase;
@@ -51,7 +52,6 @@ public class Partida {
         this.fase = fase;
     }
 
-    
     public Sede getSede() {
         return sede;
     }
@@ -60,12 +60,20 @@ public class Partida {
         this.sede = sede;
     }
 
-    public Timestamp getData_horario() {
-        return data_horario;
+    public Calendar getData() {
+        return data;
     }
 
-    public void setData_horario(Timestamp data_horario) {
-        this.data_horario = data_horario;
+    public void setData(Calendar data) {
+        this.data = data;
+    }
+
+    public Time getHorario() {
+        return horario;
+    }
+
+    public void setHorario(Time horario) {
+        this.horario = horario;
     }
 
     public Nacao getAdver1() {
@@ -100,5 +108,12 @@ public class Partida {
         this.placar2 = placar2;
     }
 
+    @Override
+    public String toString() {
+        return "Partida{" + "id=" + id + ", fase=" + fase + ", sede=" + sede + ", data=" + data + ", horario=" + horario + ", adver1=" + adver1 + ", adver2=" + adver2 + ", placar1=" + placar1 + ", placar2=" + placar2 + '}';
+    }
     
+    
+    
+
 }

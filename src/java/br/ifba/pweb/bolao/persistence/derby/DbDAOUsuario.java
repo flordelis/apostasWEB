@@ -6,12 +6,11 @@
 
 package br.ifba.pweb.bolao.persistence.derby;
 
-import br.ifba.pweb.bolao.beans.Perfil;
 import br.ifba.pweb.bolao.beans.Usuario;
-import br.ifba.pweb.bolao.persistence.ConnexaoFactory;
 import br.ifba.pweb.bolao.persistence.IDAOUsuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -34,7 +33,12 @@ public class DbDAOUsuario implements IDAOUsuario{
          PreparedStatement stmt = connection.prepareStatement(sql); 
          stmt.setString(1, u.getLogin());
          stmt.setString(1, u.getSenha());
-         stmt.setString(1, u.getPapel());
+         if(u.getPerfil()!=null){
+         stmt.setInt(1, u.getPerfil().getId());
+         }
+         if(u.getPapel().equals("A")){
+            stmt.setString(1, u.getPapel());
+         }
          stmt.execute();
          stmt.close();
         }
@@ -47,15 +51,14 @@ public class DbDAOUsuario implements IDAOUsuario{
     }
     
 
+    
     @Override
-    public void salvar(Usuario u, Perfil p) throws Exception {
-        String sql="INSERT INTO \"usuario\" (\"login\", \"senha\", \"id_perfil\") VALUES " +
-                   "(?,?,?)";
+    public void removerPeloLoginSenha(Usuario u) throws Exception {
+        String sql="DELETE FROM \"usuario\" WHERE \"login\"=? AND \"senha\"=?";
         try{
          PreparedStatement stmt = connection.prepareStatement(sql); 
          stmt.setString(1, u.getLogin());
-         stmt.setString(1, u.getSenha());
-         stmt.setInt(1, p.getId());
+         stmt.setString(2, u.getSenha());
          stmt.execute();
          stmt.close();
         }
@@ -66,16 +69,37 @@ public class DbDAOUsuario implements IDAOUsuario{
           connection.close();
         }
     }
-    
 
     @Override
-    public void remover(Usuario u) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Usuario recuperarPeloLogin(String login) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Usuario recuperarPeloLoginSenha(String login, String senha) throws Exception {
+       Usuario u = null; 
+       String sql="SELETE * FROM \"usuario\" WHERE \"login\"=? AND \"senha\"=?";
+        try{
+            
+            PreparedStatement stmt = connection.prepareStatement(sql); 
+            stmt.setString(1, login);
+            stmt.setString(2, senha);
+            ResultSet rs= stmt.executeQuery();
+            while(rs.next()){
+                u=new Usuario(rs.getInt("\"id\""));
+                u.setLogin(rs.getString("\"login\""));
+                u.setSenha(rs.getString("\"senha\""));
+                u.setPapel(rs.getString("\"papel\""));
+         
+             }
+         
+         
+         stmt.close();
+         
+        }
+        catch(SQLException e){
+          throw new RuntimeException(e);
+        }
+        finally{
+          connection.close();
+        }
+        
+     return u;   
     }
 
 }

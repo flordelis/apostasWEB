@@ -14,7 +14,7 @@ import java.util.Set;
  * @author lisy
  */
 public interface IDAOSede {
-    
+    public Sede recuperarpeloId(int id) throws Exception;
     public Set<Sede> recuperarTodos()throws Exception;
     
 }

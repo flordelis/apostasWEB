@@ -16,6 +16,10 @@ public class Usuario {
     private String senha;
     private String papel;
     private Perfil perfil;
+    
+    public Usuario(int id){
+    this.id=id;
+    }
 
     public Usuario(String login, String senha, Perfil perfil) {
         this.login = login;

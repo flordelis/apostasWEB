@@ -17,6 +17,7 @@ public interface IDAOPartida {
     
     public void salvar(Partida p) throws Exception;
     public Partida recuperarPeloId(int id)throws Exception;
+    public Set<Partida> recuperarPelaFase(String fase)throws Exception;
     public Set<Partida> recuperarTodos()throws Exception;
     
 }
