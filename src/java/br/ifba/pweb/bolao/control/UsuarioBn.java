@@ -55,47 +55,25 @@ public class UsuarioBn {
 		NUsuario usuarioRN = new NUsuario();
 		usuarioRN.salvar(this.usuario);
 
-		if (this.conta.getNome().isEmpty()) {
+		if (!this.conta.getNome().isEmpty()) {
 			this.conta.setUsuario(this.usuario);
-			NPerfil contaRN = new NPerfil();
+                        NPerfil contaRN = new NPerfil();
+                        contaRN.ativar(this.conta);
 			contaRN.salvar(this.conta);
 		}
-		
-     public String excluir() {
-		UsuarioRN usuarioRN = new UsuarioRN();
+             return "salvo com sucesso";   
+        }	
+     public String excluir() throws Exception {
+		NUsuario usuarioRN = new NUsuario();
 		usuarioRN.excluir(this.usuario);
 		this.lista = null;
 		return null;
 	}
 
-	public String ativar() {
-		if (this.usuario.isAtivo())
-			this.usuario.setAtivo(false);
-		else
-			this.usuario.setAtivo(true);
-
-		UsuarioRN usuarioRN = new UsuarioRN();
-		usuarioRN.salvar(this.usuario);
-		return null;
-	}
-
-	public String atribuiPermissao(Usuario usuario, String permissao) {
-
-		this.usuario = usuario;
-
-		Set<String> permissoes = this.usuario.getPermissao();
-
-		if (permissoes.contains(permissao)) {
-			permissoes.remove(permissao);
-		} else {
-			permissoes.add(permissao);
-		}
-		return null;
-	}
-
-	public List<Usuario> getLista() {
+	
+      public Set <Usuario> getLista() throws Exception {
 		if (this.lista == null) {
-			UsuarioRN usuarioRN = new UsuarioRN();
+			NUsuario usuarioRN = new NUsuario();
 			this.lista = usuarioRN.listar();
 		}
 		return this.lista;
@@ -133,13 +111,11 @@ public class UsuarioBn {
 		this.permissao = permissao;
 	}
 
-	public Conta getConta() {
+	public Perfil getConta() {
 		return conta;
 	}
 
-	public void setConta(Conta conta) {
+	public void setConta(Perfil conta) {
 		this.conta = conta;
 	}
-}
-    
 }

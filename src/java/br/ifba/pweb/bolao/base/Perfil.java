@@ -22,47 +22,15 @@ public class Perfil {
     private Set<Aposta> apostas;
     private boolean ativo;
     private Usuario usuario;
-
     
-    public Perfil(String nome) {
-        this.nome = nome;
+        
+    public int getId() {
+        return id;
     }
 
     public void setId(int id) {
         this.id = id;
     }
-
-    public void setData_criacao(Date data_criacao) {
-        this.data_criacao = data_criacao;
-    }
-
-    public Set<Aposta> getApostas() {
-        return apostas;
-    }
-
-    public void addCredito(int valor){
-      this.credito+=valor;
-    }
-    
-    public String addApostas(Aposta aposta){
-     if(this.credito>0){
-    apostas.add(aposta);
-    this.credito-=5;
-    return "Operação feita com sucesso";
-    }
-    else{
-    return "Compre mais credito";
-    }
-    }
-
-    @Override
-    public String toString() {
-        return "Perfil{" + "id=" + id + ", nome=" + nome + ", credito=" + credito + ", data_criacao=" + data_criacao + ", apostas=" + apostas + ", ativo=" + ativo + ", usuario=" + usuario + '}';
-    }
-    
-    
-    
-   
 
     public String getNome() {
         return nome;
@@ -80,22 +48,37 @@ public class Perfil {
         this.credito = credito;
     }
 
-    public int getId() {
-        return id;
-    }
-
     public Date getData_criacao() {
         return data_criacao;
     }
 
-    public void setAtivo(String ganhou) {
-     this.ativo=true;
+    public void setData_criacao(Date data_criacao) {
+        this.data_criacao = data_criacao;
+    }
+
+    public Set<Aposta> getApostas() {
+        return apostas;
+    }
+
+    public void setApostas(Set<Aposta> apostas) {
+        this.apostas = apostas;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
     }
 
     public void setUsuario(Usuario usuario) {
-     this.usuario=usuario;
+        this.usuario = usuario;
     }
-    
-    
+ 
     
 }

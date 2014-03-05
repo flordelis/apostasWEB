@@ -16,28 +16,20 @@ public class Usuario implements  Serializable{
     private int id;
     private String login;
     private String senha;
-    private final String permissao;
- 
-    
-   
-   public Usuario(String login, String senha, String permissao) {
-        this.login = login;
-        this.senha = senha;
-        this.permissao=permissao;
-   }
-   
-   public Usuario(int id,String login, String senha, String permissao) {
-        this.id=id;
-        this.login = login;
-        this.senha = senha;
-        this.permissao=permissao;
-   }
-  
-   
-    public boolean isAdmin(){
-      return permissao.equalsIgnoreCase("ROLE_ADMIN");   
+    private String permissao;
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "id=" + id + ", login=" + login + ", senha=" + senha + ", permissao=" + permissao + '}';
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+ 
+   
+   
+    
     public int getId() {
         return id;
     }
@@ -64,8 +56,8 @@ public class Usuario implements  Serializable{
         this.senha = senha;
     }
 
-    public void setPermissao(String role_usuario) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setPermissao(String permissao) {
+        this.permissao=permissao;
     }
 
  }

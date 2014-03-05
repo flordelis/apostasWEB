@@ -158,7 +158,8 @@ public class DbDAOUsuario implements IDAOUsuario{
             PreparedStatement stmt = connection.prepareStatement(sql); 
             ResultSet rs= stmt.executeQuery();
             while(rs.next()){
-                u.add(new Usuario(rs.getInt("\"id\""), rs.getString("\"login\""), rs.getString("\"senha\""), rs.getString("\"papel\"")));
+                u.add(new Usuario());
+                (rs.getInt("\"id\""), rs.getString("\"login\""), rs.getString("\"senha\""), rs.getString("\"papel\"")));
                         
              }
                   

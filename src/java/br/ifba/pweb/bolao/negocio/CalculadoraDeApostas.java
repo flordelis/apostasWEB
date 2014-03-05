@@ -56,10 +56,10 @@ public class CalculadoraDeApostas implements ICalculadoraApostas{
       for(Aposta aposta: apostas){
           for(Perfil vencedor:vencedores){
           if(aposta.getJogador().getId()==vencedor.getId()){
-          aposta.getJogador().setStatus("ganhou");
+          aposta.setStatus("ganhou");
           }
           else{
-          aposta.getJogador().setStatus("perdeu");
+          aposta.setStatus("perdeu");
           }
           
           apostaDao.atualizarStatus(aposta);
