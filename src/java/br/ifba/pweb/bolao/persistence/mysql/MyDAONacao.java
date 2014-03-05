@@ -7,7 +7,7 @@
 package br.ifba.pweb.bolao.persistence.mysql;
 
 import br.ifba.pweb.bolao.persistence.derby.*;
-import br.ifba.pweb.bolao.beans.Nacao;
+import br.ifba.pweb.bolao.base.Nacao;
 import br.ifba.pweb.bolao.persistence.IDAONacao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

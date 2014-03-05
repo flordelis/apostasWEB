@@ -4,35 +4,44 @@
  * and open the template in the editor.
  */
 
-package br.ifba.pweb.bolao.beans;
+package br.ifba.pweb.bolao.base;
 
 /**
  *
  * @author lisy
  */
-public class Sede {
-    private final int id;
-    private final String nome;
+public class Nacao {
+  private  int id;
+  private  String nome;  
 
-    public Sede(int id, String nome) {
+    public Nacao(int id, String nome) {
         this.id = id;
         this.nome = nome;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    
+
+        
     @Override
     public String toString() {
-        return "Sede{" + "id=" + id + ", nome=" + nome + '}';
+        return "Nacao{" + "id=" + id + ", nome=" + nome + '}';
     }
-    
 
     public int getId() {
         return id;
     }
 
-   
+    
     public String getNome() {
         return nome;
     }
-
-        
+      
 }

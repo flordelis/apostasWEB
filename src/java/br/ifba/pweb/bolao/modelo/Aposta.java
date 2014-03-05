@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package br.ifba.pweb.bolao.beans;
+package br.ifba.pweb.bolao.base;
 
 import java.sql.Date;
 import java.util.Calendar;

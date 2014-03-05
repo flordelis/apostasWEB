@@ -6,7 +6,7 @@
 
 package br.ifba.pweb.bolao.persistence.mysql;
 
-import br.ifba.pweb.bolao.beans.Aposta;
+import br.ifba.pweb.bolao.base.Aposta;
 import br.ifba.pweb.bolao.persistence.IDAOAposta;
 import br.ifba.pweb.bolao.persistence.IDAOPartida;
 import br.ifba.pweb.bolao.persistence.IDAOPerfil;

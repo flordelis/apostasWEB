@@ -4,16 +4,14 @@
  * and open the template in the editor.
  */
 
-package br.ifba.pweb.bolao.model;
+package br.ifba.pweb.bolao.negocio;
 
-import br.ifba.pweb.bolao.beans.Aposta;
-import br.ifba.pweb.bolao.beans.Partida;
-import br.ifba.pweb.bolao.beans.Perfil;
-import br.ifba.pweb.bolao.persistence.derby.DbDAOAposta;
-import br.ifba.pweb.bolao.persistence.derby.DbDAOPerfil;
+import br.ifba.pweb.bolao.base.Aposta;
+import br.ifba.pweb.bolao.base.Partida;
+import br.ifba.pweb.bolao.base.Perfil;
+import br.ifba.pweb.bolao.persistence.DaoFactory;
 import br.ifba.pweb.bolao.persistence.IDAOAposta;
 import br.ifba.pweb.bolao.persistence.IDAOPerfil;
-import br.ifba.pweb.bolao.persistence.mysql.MyDAOAposta;
 import java.util.Set;
 
 /**
@@ -23,18 +21,18 @@ import java.util.Set;
 public class DistribuidorRecompensa {
     
     private final Set <Perfil> vencedores;
-    IDAOAposta adao;
+    IDAOAposta apostaDAO;
     private int valorTotal;
     private final Partida partida;
     Set<Aposta> apostas;
     int recompensa;
-    IDAOPerfil pdao;
+    IDAOPerfil perfilDAO;
 
     public DistribuidorRecompensa(Set <Perfil> vencedores, Partida partida) throws Exception {
         this.vencedores=vencedores;
         this.partida=partida;
-        adao= new MyDAOAposta();
-        apostas=adao.recuperarPelaIdPartida(partida.getId());
+        apostaDAO= DaoFactory.criarApostaDAO();
+        apostas=apostaDAO.recuperarPelaIdPartida(partida.getId());
         this.valorTotal=0;
         this.calculaValorTotal();
         this.calculaRecompensa();
@@ -43,9 +41,9 @@ public class DistribuidorRecompensa {
     
     
     public void distribuir() throws Exception{
-         pdao= new DbDAOPerfil();
+         perfilDAO= DaoFactory.criarPerfilDAO();
          for(Perfil vencedor: vencedores){
-              pdao.altualizarCredito(recompensa, vencedor);
+              perfilDAO.altualizarCredito(recompensa, vencedor);
         }
     }
       

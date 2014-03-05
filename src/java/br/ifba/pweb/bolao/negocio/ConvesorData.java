@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package br.ifba.pweb.bolao.model;
+package br.ifba.pweb.bolao.negocio;
 
 import java.sql.Date;
 import java.text.DateFormat;

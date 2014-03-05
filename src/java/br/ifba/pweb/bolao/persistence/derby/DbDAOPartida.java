@@ -6,8 +6,8 @@
 
 package br.ifba.pweb.bolao.persistence.derby;
 
-import br.ifba.pweb.bolao.beans.Partida;
-import br.ifba.pweb.bolao.model.ConvesorData;
+import br.ifba.pweb.bolao.base.Partida;
+import br.ifba.pweb.bolao.negocio.ConvesorData;
 import br.ifba.pweb.bolao.persistence.IDAONacao;
 import br.ifba.pweb.bolao.persistence.IDAOPartida;
 import br.ifba.pweb.bolao.persistence.IDAOSede;

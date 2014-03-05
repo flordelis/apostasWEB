@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package br.ifba.pweb.bolao.model;
+package br.ifba.pweb.bolao.negocio;
 
-import br.ifba.pweb.bolao.beans.Perfil;
+import br.ifba.pweb.bolao.base.Perfil;
 import java.util.Set;
 
 /**

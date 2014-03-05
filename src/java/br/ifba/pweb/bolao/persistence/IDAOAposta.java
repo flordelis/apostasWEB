@@ -6,8 +6,8 @@
 
 package br.ifba.pweb.bolao.persistence;
 
-import br.ifba.pweb.bolao.beans.Aposta;
-import br.ifba.pweb.bolao.beans.Perfil;
+import br.ifba.pweb.bolao.base.Aposta;
+import br.ifba.pweb.bolao.base.Perfil;
 import java.sql.Date;
 import java.util.Set;
 

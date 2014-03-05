@@ -6,13 +6,15 @@
 
 package br.ifba.pweb.bolao.persistence.derby;
 
-import br.ifba.pweb.bolao.beans.Usuario;
+import br.ifba.pweb.bolao.base.Usuario;
 import br.ifba.pweb.bolao.persistence.IDAOPerfil;
 import br.ifba.pweb.bolao.persistence.IDAOUsuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Set;
+
 
 /**
  *
@@ -34,12 +36,8 @@ public class DbDAOUsuario implements IDAOUsuario{
          PreparedStatement stmt = connection.prepareStatement(sql); 
          stmt.setString(1, u.getLogin());
          stmt.setString(1, u.getSenha());
-         if(u.getPerfil()!=null){
-         stmt.setInt(1, u.getPerfil().getId());
-         }
-         if(u.getPapel().equals("A")){
-            stmt.setString(1, u.getPapel());
-         }
+         stmt.setString(1, u.getPermissao());
+         
          stmt.execute();
          stmt.close();
         }
@@ -54,7 +52,7 @@ public class DbDAOUsuario implements IDAOUsuario{
 
     
     @Override
-    public void removerPeloLoginSenha(Usuario u) throws Exception {
+    public void excluir(Usuario u) throws Exception  {
         String sql="DELETE FROM \"usuario\" WHERE \"login\"=? AND \"senha\"=?";
         try{
          PreparedStatement stmt = connection.prepareStatement(sql); 
@@ -67,31 +65,28 @@ public class DbDAOUsuario implements IDAOUsuario{
           throw new RuntimeException(e);
         }
         finally{
-          connection.close();
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+               throw new RuntimeException(ex);
+            }
         }
     }
 
     @Override
-    public Usuario recuperarPeloLoginSenha(String login, String senha) throws Exception {
+    public Usuario buscarPorLogin(String login) throws Exception{
        Usuario u = null; 
-       String sql="SELETE * FROM \"usuario\" WHERE \"login\"=? AND \"senha\"=?";
+       String sql="SELETE * FROM \"usuario\" WHERE \"login\"=?;";
         try{
             IDAOPerfil pdao = new DbDAOPerfil();
             PreparedStatement stmt = connection.prepareStatement(sql); 
             stmt.setString(1, login);
-            stmt.setString(2, senha);
             ResultSet rs= stmt.executeQuery();
             while(rs.next()){
-                u=new Usuario(rs.getInt("\"id\""));
-                u.setLogin(rs.getString("\"login\""));
-                u.setSenha(rs.getString("\"senha\""));
-                u.setPapel(rs.getString("\"papel\""));
-                if(rs.getInt("\"perfil_id\"")!=0)
-                   u.setPerfil(pdao.recuperarPeloId(rs.getInt("\"perfil_id\""))); 
-         
+                u=new Usuario(rs.getInt("\"id\""), rs.getString("\"login\""), rs.getString("\"senha\""),rs.getString("\"papel\""));
+            
              }
-         
-         
+              
          stmt.close();
          
         }
@@ -105,4 +100,78 @@ public class DbDAOUsuario implements IDAOUsuario{
      return u;   
     }
 
+    @Override
+    public void atualizar(Usuario u) throws Exception {
+        String sql="UPDATE \"usuario\" SET \"logion\"=? \"senha\"=? WHERE \"id\"=?;";
+        try{
+            PreparedStatement stmt = connection.prepareStatement(sql); 
+            stmt.setString(1, u.getLogin());
+            stmt.setString(1, u.getSenha());
+            stmt.execute();
+            stmt.close();
+        }
+        catch(SQLException e){
+          throw new RuntimeException(e);
+        }
+        finally{
+          connection.close();
+        }
+    }
+    
+
+    @Override
+    public Usuario carregar(Integer codigo) throws Exception {
+           
+       Usuario u = null; 
+       String sql="SELETE * FROM \"usuario\" WHERE \"id\"=?;";
+        
+       try{
+            IDAOPerfil pdao = new DbDAOPerfil();
+            PreparedStatement stmt = connection.prepareStatement(sql); 
+            stmt.setInt(1, codigo);
+            ResultSet rs= stmt.executeQuery();
+            while(rs.next()){
+                u=new Usuario(rs.getInt("\"id\""), rs.getString("\"login\""), rs.getString("\"senha\""), rs.getString("\"papel\""));
+                        
+             }
+                  
+         stmt.close();
+         
+        }
+        catch(SQLException e){
+          throw new RuntimeException(e);
+        }
+        finally{
+          connection.close();
+        }
+        
+     return u;   
+    }
+
+    @Override
+    public Set<Usuario> listar() throws Exception {
+       Set<Usuario> u = null; 
+       String sql="SELETE * FROM \"usuario\"";
+        
+       try{
+            IDAOPerfil pdao = new DbDAOPerfil();
+            PreparedStatement stmt = connection.prepareStatement(sql); 
+            ResultSet rs= stmt.executeQuery();
+            while(rs.next()){
+                u.add(new Usuario(rs.getInt("\"id\""), rs.getString("\"login\""), rs.getString("\"senha\""), rs.getString("\"papel\"")));
+                        
+             }
+                  
+         stmt.close();
+         
+        }
+        catch(SQLException e){
+          throw new RuntimeException(e);
+        }
+        finally{
+          connection.close();
+        }
+        
+     return u;   
+    }
 }

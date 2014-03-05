@@ -6,7 +6,7 @@
 
 package br.ifba.pweb.bolao.persistence;
 
-import br.ifba.pweb.bolao.beans.Sede;
+import br.ifba.pweb.bolao.base.Sede;
 import java.util.Set;
 
 /**

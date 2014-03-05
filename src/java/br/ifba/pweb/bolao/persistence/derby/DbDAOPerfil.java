@@ -6,7 +6,7 @@
 
 package br.ifba.pweb.bolao.persistence.derby;
 
-import br.ifba.pweb.bolao.beans.Perfil;
+import br.ifba.pweb.bolao.base.Perfil;
 import br.ifba.pweb.bolao.persistence.IDAOPerfil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

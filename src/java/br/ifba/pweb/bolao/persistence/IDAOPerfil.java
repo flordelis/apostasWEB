@@ -6,8 +6,8 @@
 
 package br.ifba.pweb.bolao.persistence;
 
-import br.ifba.pweb.bolao.beans.Perfil;
-import br.ifba.pweb.bolao.beans.Usuario;
+import br.ifba.pweb.bolao.base.Perfil;
+import br.ifba.pweb.bolao.base.Usuario;
 import java.util.Set;
 
 /**

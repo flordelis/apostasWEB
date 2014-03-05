@@ -4,14 +4,13 @@
  * and open the template in the editor.
  */
 
-package br.ifba.pweb.bolao.model;
+package br.ifba.pweb.bolao.negocio;
 
-import br.ifba.pweb.bolao.beans.Aposta;
-import br.ifba.pweb.bolao.beans.Partida;
-import br.ifba.pweb.bolao.beans.Perfil;
-import br.ifba.pweb.bolao.persistence.derby.DbDAOAposta;
+import br.ifba.pweb.bolao.base.Aposta;
+import br.ifba.pweb.bolao.base.Partida;
+import br.ifba.pweb.bolao.base.Perfil;
+import br.ifba.pweb.bolao.persistence.DaoFactory;
 import br.ifba.pweb.bolao.persistence.IDAOAposta;
-import br.ifba.pweb.bolao.persistence.mysql.MyDAOAposta;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,13 +20,13 @@ import java.util.Set;
  */
 public class CalculadoraDeApostas implements ICalculadoraApostas{
     
-    IDAOAposta adao;
+    IDAOAposta apostaDao;
     Set<Aposta> apostas;
     Partida partida;
 
     public CalculadoraDeApostas(Partida partida) throws Exception {
-      adao= new MyDAOAposta();  
-      apostas= (Set<Aposta>) adao.recuperarPelaIdPartida(partida.getId());
+      this.apostaDao= DaoFactory.criarApostaDAO();  
+      apostas= (Set<Aposta>) apostaDao.recuperarPelaIdPartida(partida.getId());
         
     }
   
@@ -63,7 +62,7 @@ public class CalculadoraDeApostas implements ICalculadoraApostas{
           aposta.getJogador().setStatus("perdeu");
           }
           
-          adao.atualizarStatus(aposta);
+          apostaDao.atualizarStatus(aposta);
       }
       }
        

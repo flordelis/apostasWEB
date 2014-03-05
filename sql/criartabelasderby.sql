@@ -59,9 +59,7 @@ CREATE TABLE "usuario" (
   "id" INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY,
   "login" VARCHAR(50) NOT NULL,
   "senha" VARCHAR(85) NOT NULL,
-  "papel" CHAR(1) NOT NULL DEFAULT 'U',
-  --"id_conta" INTEGER  DEFAULT NULL,
-  "id_perfil" INTEGER UNIQUE DEFAULT NULL,
+  "papel" VARCHAR(45) NOT NULL DEFAULT 'ROLE_USUARIO',
   PRIMARY KEY ("id")
 );
 
@@ -73,25 +71,15 @@ CREATE TABLE "usuario" (
 		
 CREATE TABLE "perfil" (
   "id" INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY,
-  --"id_user" INTEGER NOT NULL,
+  "id_usuario" INTEGER NOT NULL,
   "nome" VARCHAR(40)  NOT NULL,
   "credito" DOUBLE NOT NULL DEFAULT 10,
-  "datacriacao" DATE NOT NULL DEFAULT CURRENT_DATE,
-  --"num_acerto" INTEGER DEFAULT NULL,
+  "dt_cadastro" DATE NOT NULL DEFAULT CURRENT_DATE,
+  "num_acerto" INTEGER DEFAULT NULL,
   PRIMARY KEY ("id")
  );
 
 
--- ---
--- Table "conta"
--- 
-	
---CREATE TABLE "conta" (
-  --"id" INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY,
-  --"credito" DOUBLE DEFAULT 10.0,
-  --"datacriacao" DATE NOT NULL,
-  --PRIMARY KEY ("id")
-----);
 
 
 
@@ -121,6 +109,6 @@ ALTER TABLE "partida" ADD FOREIGN KEY ("id_nacao") REFERENCES "nacao" ("id");
 ALTER TABLE "partida" ADD FOREIGN KEY ("id_adversaria") REFERENCES "nacao" ("id");
 ALTER TABLE "partida" ADD FOREIGN KEY ("id_sede") REFERENCES "sede" ("id");
 --ALTER TABLE "usuario" ADD FOREIGN KEY (id_conta) REFERENCES "conta" ("id");
-ALTER TABLE "usuario" ADD FOREIGN KEY ("id_perfil") REFERENCES "perfil" ("id");
+ALTER TABLE "perfil" ADD FOREIGN KEY ("id_perfil") REFERENCES "usuario" ("id");
 ALTER TABLE "aposta" ADD FOREIGN KEY ("id_perfil") REFERENCES "perfil" ("id");
 ALTER TABLE "aposta" ADD FOREIGN KEY ("id_partida") REFERENCES "partida" ("id");

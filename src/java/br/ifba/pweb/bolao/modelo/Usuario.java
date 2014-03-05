@@ -4,58 +4,54 @@
  * and open the template in the editor.
  */
 
-package br.ifba.pweb.bolao.beans;
+package br.ifba.pweb.bolao.base;
+
+import java.io.Serializable;
 
 /**
  *
  * @author lisy
  */
-public class Usuario {
+public class Usuario implements  Serializable{
     private int id;
     private String login;
     private String senha;
-    private String papel;
-    private Perfil perfil;
+    private final String permissao;
+ 
     
-    public Usuario(int id){
-    this.id=id;
-    }
-
-    public Usuario(String login, String senha, Perfil perfil) {
+   
+   public Usuario(String login, String senha, String permissao) {
         this.login = login;
         this.senha = senha;
-        this.perfil = perfil;
-    }
-   public Usuario(String login, String senha, char papel) {
-        this.login = login;
-        this.senha = senha;
+        this.permissao=permissao;
    }
-    @Override
-    public String toString() {
-        return "Usuario{" + "id=" + id + ", login=" + login + ", senha=" + senha + ", perfil=" + perfil + '}';
+   
+   public Usuario(int id,String login, String senha, String permissao) {
+        this.id=id;
+        this.login = login;
+        this.senha = senha;
+        this.permissao=permissao;
+   }
+  
+   
+    public boolean isAdmin(){
+      return permissao.equalsIgnoreCase("ROLE_ADMIN");   
     }
 
     public int getId() {
         return id;
     }
  
-    
-    public Perfil getPerfil() {
-        return perfil;
-    }
-    
+        
     public String getLogin() {
         return login;
     }
 
-    public String getPapel() {
-        return papel;
+    public String getPermissao() {
+        return permissao;
     }
 
-    public void setPapel(String papel) {
-        this.papel = papel;
-    }
-
+    
     public void setLogin(String login) {
         this.login = login;
     }
@@ -68,7 +64,8 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public void setPerfil(Perfil recuperarPeloId) {
+    public void setPermissao(String role_usuario) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
  }
