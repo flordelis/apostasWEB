@@ -7,7 +7,9 @@
 package br.ifba.pweb.bolao.persistence.derby;
 
 import br.ifba.pweb.bolao.beans.Partida;
+import br.ifba.pweb.bolao.persistence.ConnexaoFactory;
 import br.ifba.pweb.bolao.persistence.IDAOPartida;
+import java.sql.Connection;
 import java.util.Set;
 
 /**
@@ -15,6 +17,12 @@ import java.util.Set;
  * @author lisy
  */
 public class DbDAOPartida implements IDAOPartida{
+    
+    Connection connection;
+    
+    public DbDAOPartida() {
+        connection = new ConnexaoFactory().getConnection();
+    }
 
     @Override
     public void salvar(Partida p) throws Exception {

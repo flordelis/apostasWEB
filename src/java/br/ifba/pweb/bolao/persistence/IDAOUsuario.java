@@ -6,6 +6,7 @@
 
 package br.ifba.pweb.bolao.persistence;
 
+import br.ifba.pweb.bolao.beans.Perfil;
 import br.ifba.pweb.bolao.beans.Usuario;
 import java.util.Set;
 
@@ -15,6 +16,7 @@ import java.util.Set;
  */
 public interface IDAOUsuario {
     public void salvar(Usuario u) throws Exception;
+    public void salvar(Usuario u, Perfil p) throws Exception;
     public void remover(Usuario u)throws Exception;
     public Usuario recuperarPeloLogin(String login)throws Exception;
 

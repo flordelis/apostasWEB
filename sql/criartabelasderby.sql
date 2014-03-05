@@ -4,6 +4,7 @@
 --DROP TABLE --IF EXISTS-- "conta";
 --DROP TABLE /*IF EXISTS*/ "usuario";
 --DROP TABLE /*IF EXISTS*/ "nacao";
+--DROP TABLE /*IF EXISTS*/ "sede";
 
 
 
@@ -59,7 +60,7 @@ CREATE TABLE "usuario" (
   "senha" VARCHAR(85) NOT NULL,
   "papel" CHAR(1) NOT NULL DEFAULT 'U',
   --"id_conta" INTEGER  DEFAULT NULL,
-  "id_perfil" INTEGER  DEFAULT NULL,
+  "id_perfil" INTEGER UNIQUE DEFAULT NULL,
   PRIMARY KEY ("id")
 );
 
@@ -72,9 +73,9 @@ CREATE TABLE "usuario" (
 CREATE TABLE "perfil" (
   "id" INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY,
   --"id_user" INTEGER NOT NULL,
-  "nome" VARCHAR(40)  DEFAULT NULL,
+  "nome" VARCHAR(40)  NOT NULL,
   "credito" DOUBLE NOT NULL DEFAULT 10,
-  "datacriacao" DATE NOT NULL DEFAULT,
+  "datacriacao" DATE NOT NULL DEFAULT CURRENT_DATE,
   --"num_acerto" INTEGER DEFAULT NULL,
   PRIMARY KEY ("id")
  );
@@ -101,11 +102,12 @@ CREATE TABLE "perfil" (
 CREATE TABLE "aposta" (
   "id" INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY,
   --"id_conta" INTEGER DEFAULT NULL,
-  "id_perfil" INTEGER DEFAULT NULL,
-  "id_partida" INTEGER DEFAULT NULL,
-  "palpite1" INTEGER DEFAULT NULL,
-  "palpite2" INTEGER DEFAULT NULL,
-  "status" VARCHAR(8) DEFAULT NULL,
+  "id_perfil" INTEGER NOT NULL,
+  "id_partida" INTEGER NOT NULL,
+  "palpite1" INTEGER NOT NULL,
+  "palpite2" INTEGER NOT NULL,
+  "status" VARCHAR(8) NOT NULL,
+   "data" DATE DEFAULT CURRENT_DATE,
   PRIMARY KEY ("id")
 );
 

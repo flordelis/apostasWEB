@@ -177,7 +177,10 @@
  --------------------------------------------------------------------------------------------------------------------------------------
  
  -- Peenchimento 1 Adm
- INSERT INTO "usuario" ("login","senha","papel") VALUES ('croupier','1234cp0','A');
+ 
+ -- INSERT INTO "usuario" ("login","senha","papel") VALUES ();
+ 
+   INSERT INTO "usuario" ("login","senha","papel") VALUES ('croupier','1234cp0','A');
  
  
  
@@ -186,15 +189,11 @@
  ---Preenchimento teste
  
  --INSERT INTO "perfil" ("nome") VALUES();
- --('','','');
-  INSERT INTO "usuario" ("login","senha","id_perfil") VALUES ('lisy','1234cp0','A',1);
- --INSERT INTO "conta" ("credito","datacriacao","id_usuario") VALUES
- --('','','','');
  
- --INSERT INTO "perfil" ("nome","id_usuario","datacriacao") VALUES
- --('','','');
+ --INSERT INTO "usuario" ("login","senha","id_perfil") VALUES ();
 
- --INSERT INTO "aposta" ("id_conta","id_partida","palpite1","palpite2","status") VALUES
- --('','','','','','');
+ --INSERT INTO "aposta" ("id_perfil","id_partida","palpite1","palpite2") VALUES
+ --();
  
+  INSERT INTO "usuario" ("login","senha","id_perfil") VALUES ('lisy','1234cp0',1);
  

@@ -16,8 +16,9 @@ import java.util.Set;
  */
 public interface IDAOPerfil {
     
-    public void salvar(Perfil p, Usuario u) throws Exception;
-    public void altualizarCredito(int valor, Perfil p);
+    public void salvar(Perfil p) throws Exception;
+    public void altualizarCredito(int valor, Perfil p)throws Exception;
+    public Perfil recuperarPeloId(int id)throws Exception;
     public Perfil recuperarPeloIdUsuario(int iduser)throws Exception;
     public Set<Perfil> recuperarTodos()throws Exception;	
     

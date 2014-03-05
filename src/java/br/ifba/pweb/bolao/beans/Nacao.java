@@ -11,17 +11,20 @@ package br.ifba.pweb.bolao.beans;
  * @author lisy
  */
 public class Nacao {
-  private final int id;
-  private final String nome;  
+  private  int id;
+  private  String nome;  
 
-    
-
-    public Nacao(int id, String nome) {
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public void setNome(String nome) {
         this.nome = nome;
     }
+
     
-    
+
+        
     @Override
     public String toString() {
         return "Nacao{" + "id=" + id + ", nome=" + nome + '}';

@@ -6,6 +6,7 @@
 
 package br.ifba.pweb.bolao.beans;
 
+import java.sql.Date;
 import java.util.Calendar;
 
 /**
@@ -15,11 +16,18 @@ import java.util.Calendar;
 public class Aposta {
     private int id;
     private Perfil jogador;
-    private Calendar data_criada;
+    private Date data_criada;
     private Partida partida;
     private int palpite1;
     private int palpite2;
     private String status;
+
+    public Aposta(Perfil jogador, Partida partida, int palpite1, int palpite2) {
+        this.jogador = jogador;
+        this.partida = partida;
+        this.palpite1 = palpite1;
+        this.palpite2 = palpite2;
+    }
 
     @Override
     public String toString() {
@@ -42,11 +50,11 @@ public class Aposta {
         this.jogador = perfil;
     }
 
-    public Calendar getData_criada() {
+    public Date getData_criada() {
         return data_criada;
     }
 
-    public void setData_criada(Calendar data_criada) {
+    public void setData_criada(Date data_criada) {
         this.data_criada = data_criada;
     }
 

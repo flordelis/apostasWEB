@@ -6,33 +6,37 @@
 
 package br.ifba.pweb.bolao.beans;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Calendar;
+import java.util.Set;
+
 
 /**
  *
  * @author lisy
  */
 public class Perfil {
-    private final int id;
+    private int id;
     private String nome;
     private int credito;
-    private final Calendar data_criacao;
-    private List<Aposta> apostas;
+    private  Date data_criacao;
+    private Set<Aposta> apostas;
 
     
-    public Perfil(int id, String nome, int credito, Calendar data_criacao) {
-        this.id = id;
+    public Perfil(String nome) {
         this.nome = nome;
-        this.credito = credito;
-        this.data_criacao = data_criacao;
-        this.apostas=new ArrayList();
-       
-        
     }
 
-    public List<Aposta> getApostas() {
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setData_criacao(Date data_criacao) {
+        this.data_criacao = data_criacao;
+    }
+
+    public Set<Aposta> getApostas() {
         return apostas;
     }
 
@@ -51,12 +55,6 @@ public class Perfil {
     }
     }
     
-    public void removeApostasbyID(int id){
-    apostas.remove(id);
-    }
-    
-    
-
     @Override
     public String toString() {
         return "Perfil{" + "id=" + id + ", nome=" + nome + ", credito=" + credito + ", data_criacao=" + data_criacao + ", apostas=" + apostas + '}';
@@ -85,7 +83,7 @@ public class Perfil {
         return id;
     }
 
-    public Calendar getData_criacao() {
+    public Date getData_criacao() {
         return data_criacao;
     }
     

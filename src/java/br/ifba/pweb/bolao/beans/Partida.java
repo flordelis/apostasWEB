@@ -6,6 +6,7 @@
 
 package br.ifba.pweb.bolao.beans;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 
 
@@ -17,7 +18,7 @@ public class Partida {
     private final int id;
     private String fase;
     private Sede sede;
-    private Calendar data_horario;
+    private Timestamp data_horario;
     private Nacao adver1;
     private Nacao adver2;
     private int placar1;
@@ -28,7 +29,7 @@ public class Partida {
         return "Partida{" + "id=" + id + ", fase=" + fase + ", sede=" + sede + ", data_horario=" + data_horario + ", adver1=" + adver1 + ", adver2=" + adver2 + ", placar1=" + placar1 + ", placar2=" + placar2 + '}';
     }
 
-    public Partida(int id, String fase, Sede sede, Calendar data_horario, Nacao adver1, Nacao adver2) {
+    public Partida(int id, String fase, Sede sede, Timestamp data_horario, Nacao adver1, Nacao adver2) {
         this.id = id;
         this.fase = fase;
         this.sede = sede;
@@ -59,11 +60,11 @@ public class Partida {
         this.sede = sede;
     }
 
-    public Calendar getData_horario() {
+    public Timestamp getData_horario() {
         return data_horario;
     }
 
-    public void setData_horario(Calendar data_horario) {
+    public void setData_horario(Timestamp data_horario) {
         this.data_horario = data_horario;
     }
 
