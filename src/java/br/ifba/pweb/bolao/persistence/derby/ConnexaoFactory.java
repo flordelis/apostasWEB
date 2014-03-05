@@ -15,7 +15,7 @@ import java.sql.SQLException;
  * @author lisy
  */
 public class ConnexaoFactory {
-     private static final String URL ="jdbc:derby:myDerby;create=true;user=derby;password=derby";
+     private static final String URL ="jdbc:derby:bolaoteste;create=true;user=bolaoteste;password=1234";
     // private static final String DRIVER="org.apache.derby.jdbc.EmbeddedDriver";
     public Connection getConnection(){
       System.out.println("Conectando ao Banco de Dados...");

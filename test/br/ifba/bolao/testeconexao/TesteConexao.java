@@ -7,7 +7,7 @@
 package br.ifba.bolao.testeconexao;
 
 import java.sql.Connection;
-import br.ifba.pweb.bolao.persistence.derby.ConnexaoFactory;
+import br.ifba.pweb.bolao.persistence.mysql.ConnexaoFactory;
 import java.sql.SQLException;
 /**
  *

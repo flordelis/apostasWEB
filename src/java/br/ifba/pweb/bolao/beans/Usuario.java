@@ -67,4 +67,8 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+    public void setPerfil(Perfil recuperarPeloId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
  }
