@@ -13,6 +13,7 @@ import br.ifba.pweb.bolao.persistence.derby.DbDAOAposta;
 import br.ifba.pweb.bolao.persistence.derby.DbDAOPerfil;
 import br.ifba.pweb.bolao.persistence.IDAOAposta;
 import br.ifba.pweb.bolao.persistence.IDAOPerfil;
+import br.ifba.pweb.bolao.persistence.mysql.MyDAOAposta;
 import java.util.Set;
 
 /**
@@ -32,7 +33,7 @@ public class DistribuidorRecompensa {
     public DistribuidorRecompensa(Set <Perfil> vencedores, Partida partida) throws Exception {
         this.vencedores=vencedores;
         this.partida=partida;
-        adao= new DbDAOAposta();
+        adao= new MyDAOAposta();
         apostas=adao.recuperarPelaIdPartida(partida.getId());
         this.valorTotal=0;
         this.calculaValorTotal();

@@ -11,6 +11,7 @@ import br.ifba.pweb.bolao.beans.Partida;
 import br.ifba.pweb.bolao.beans.Perfil;
 import br.ifba.pweb.bolao.persistence.derby.DbDAOAposta;
 import br.ifba.pweb.bolao.persistence.IDAOAposta;
+import br.ifba.pweb.bolao.persistence.mysql.MyDAOAposta;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,7 +26,7 @@ public class CalculadoraDeApostas implements ICalculadoraApostas{
     Partida partida;
 
     public CalculadoraDeApostas(Partida partida) throws Exception {
-      adao= new DbDAOAposta();  
+      adao= new MyDAOAposta();  
       apostas= (Set<Aposta>) adao.recuperarPelaIdPartida(partida.getId());
         
     }
