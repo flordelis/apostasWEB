@@ -53,7 +53,8 @@ public class Perfil {
     }
 
     public void setData_criacao(Date data_criacao) {
-        this.data_criacao = data_criacao;
+       // this.data_criacao = data_criacao;
+        data_criacao= new Date(2044,13,13);
     }
 
     public Set<Aposta> getApostas() {

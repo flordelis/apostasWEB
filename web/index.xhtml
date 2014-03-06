@@ -9,7 +9,7 @@
 	<ui:define name="corpo">
 
 		<h:form>
-			<h:commandButton action="#{usuarioBean.novo}" value="Registre-se"/>
+			<h:commandButton action="#{usuarioBn.novo}" value="Registre-se"/>
 		</h:form>
 	
 		<h:panelGroup rendered="#{AutentificadorLogin.autentificarUsuario eq 'erro'}">
@@ -17,7 +17,7 @@
 			<br/>
 	        </h:panelGroup>
 
-		<form id="login" method="post" action="#{AutentificadorLogin.autentificarUsuario="erro"}">
+		<form id="login" method="post" action="#{AutentificadorLogin.autentificarUsuario}">
 		<table>
 			<tr><td>Login</td>
 				<td><input type='text' name='login'/></td></tr>
