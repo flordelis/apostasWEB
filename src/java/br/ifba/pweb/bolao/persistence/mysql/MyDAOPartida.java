@@ -6,7 +6,7 @@
 
 package br.ifba.pweb.bolao.persistence.mysql;
 
-import br.ifba.pweb.bolao.persistence.derby.*;
+//import br.ifba.pweb.bolao.persistence.derby.*;
 import br.ifba.pweb.bolao.base.Partida;
 import br.ifba.pweb.bolao.negocio.ConvesorData;
 import br.ifba.pweb.bolao.persistence.IDAONacao;

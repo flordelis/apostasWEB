@@ -22,13 +22,7 @@ public class Aposta {
     private int palpite2;
     private String status;
 
-    public Aposta(Perfil jogador, Partida partida, int palpite1, int palpite2) {
-        this.jogador = jogador;
-        this.partida = partida;
-        this.palpite1 = palpite1;
-        this.palpite2 = palpite2;
-    }
-
+   
     @Override
     public String toString() {
         return "Aposta{" + "id=" + id + ", perfil=" + jogador + ", data_criada=" + data_criada + ", partida=" + partida + ", palpite1=" + palpite1 + ", palpite2=" + palpite2 + ", status=" + status + '}';

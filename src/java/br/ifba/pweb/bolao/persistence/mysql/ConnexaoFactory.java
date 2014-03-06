@@ -6,7 +6,7 @@
 
 package br.ifba.pweb.bolao.persistence.mysql;
 
-import br.ifba.pweb.bolao.persistence.derby.*;
+//import br.ifba.pweb.bolao.persistence.derby.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

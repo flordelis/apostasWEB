@@ -22,8 +22,8 @@
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
     <resource-ref>
-        <description>jdbc:derby://localhost:1527/bolaoteste</description>
-        <res-ref-name>bolaoteste</res-ref-name>
+        <description>jdbc:mysql://192.168.3.15:3306/bolaoonline</description>
+        <res-ref-name>bolaoonline</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
         <res-sharing-scope>Shareable</res-sharing-scope>

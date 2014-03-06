@@ -79,6 +79,10 @@ public class Perfil {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+
+    public void addCredito(int valor) {
+     this.credito+=valor;
+    }
  
     
 }

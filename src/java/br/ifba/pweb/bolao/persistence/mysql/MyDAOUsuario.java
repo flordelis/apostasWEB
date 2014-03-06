@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -83,7 +84,11 @@ public class MyDAOUsuario implements IDAOUsuario{
             stmt.setString(1, login);
             ResultSet rs= stmt.executeQuery();
             while(rs.next()){
-                u=new Usuario(rs.getInt("`id`"), rs.getString("`login`"), rs.getString("`senha`"),rs.getString("`papel`"));
+                u=new Usuario();
+                u.setId(rs.getInt("`id`"));
+                u.setLogin(rs.getString("`login`"));
+                u.setSenha(rs.getString("`senha`"));
+                u.setPermissao(rs.getString("`permissao`"));
             
              }
               
@@ -122,7 +127,7 @@ public class MyDAOUsuario implements IDAOUsuario{
     @Override
     public Usuario carregar(Integer codigo) throws Exception {
            
-       Usuario u = null; 
+      Usuario u = null; 
        String sql="SELETE * FROM `usuario` WHERE `id`=?;";
         
        try{
@@ -131,8 +136,11 @@ public class MyDAOUsuario implements IDAOUsuario{
             stmt.setInt(1, codigo);
             ResultSet rs= stmt.executeQuery();
             while(rs.next()){
-                u=new Usuario(rs.getInt("`id`"), rs.getString("`login`"), rs.getString("`senha`"), rs.getString("`papel`"));
-                        
+                u=new Usuario();
+                u.setId(rs.getInt("`id`"));
+                u.setLogin(rs.getString("`login`"));
+                u.setSenha(rs.getString("`senha`"));
+                u.setPermissao(rs.getString("`permissao`"));      
              }
                   
          stmt.close();
@@ -150,7 +158,7 @@ public class MyDAOUsuario implements IDAOUsuario{
 
     @Override
     public Set<Usuario> listar() throws Exception {
-       Set<Usuario> u = null; 
+       Set<Usuario> us = new HashSet(); 
        String sql="SELETE * FROM `usuario`";
         
        try{
@@ -158,8 +166,13 @@ public class MyDAOUsuario implements IDAOUsuario{
             PreparedStatement stmt = connection.prepareStatement(sql); 
             ResultSet rs= stmt.executeQuery();
             while(rs.next()){
-                u.add(new Usuario(rs.getInt("`id`"), rs.getString("`login`"), rs.getString("`senha`"), rs.getString("`papel`")));
-                        
+                Usuario u=new Usuario();
+                u.setId(rs.getInt("`id`"));
+                u.setLogin(rs.getString("`login`"));
+                u.setSenha(rs.getString("`senha`"));
+                u.setPermissao(rs.getString("`permissao`"));   
+                
+                us.add(u);
              }
                   
          stmt.close();
@@ -172,6 +185,6 @@ public class MyDAOUsuario implements IDAOUsuario{
           connection.close();
         }
         
-     return u;   
+     return us;   
     }
 }

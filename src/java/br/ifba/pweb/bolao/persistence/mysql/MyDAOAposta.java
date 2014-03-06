@@ -54,7 +54,7 @@ public class MyDAOAposta implements IDAOAposta{
     }
 
     @Override
-    public void atualizarStatus(Aposta a) throws Exception {
+    public void atualizar(Aposta a) throws Exception {
        String SQL="Update `aposta` SET `status`=? WHERE `perfil_id`=?";
         try {
             PreparedStatement stmt = this.connection.prepareStatement(SQL);
@@ -68,8 +68,8 @@ public class MyDAOAposta implements IDAOAposta{
     }
 
     @Override
-    public Aposta recuperarPorId(int id) throws Exception {
-        Aposta a = null;
+    public Aposta carregar(int id) throws Exception {
+        Aposta a = new Aposta();
       
         String SQL="Select * from `aposta` WHERE `id`=?";
         try {
@@ -85,9 +85,13 @@ public class MyDAOAposta implements IDAOAposta{
                IDAOPartida pdao= new MyDAOPartida();
                IDAOPerfil pfdao= new MyDAOPerfil();
                
-               a = new Aposta(pfdao.recuperarPeloId(rs.getInt("`perfil_id`")),pdao.recuperarPeloId(rs.getInt("`partida_id`")), rs.getInt("`palpite1`"), rs.getInt("`palpite2`"));
-               a.setData_criada(rs.getDate("data_criada"));
                a.setId(rs.getInt("id"));
+               a.setJogador(pfdao.carregar(rs.getInt("`perfil_id`")));
+               a.setPartida(pdao.recuperarPeloId(rs.getInt("`partida_id`")));
+               a.setPalpite1(rs.getInt("`palpite1`"));
+               a.setPalpite2(rs.getInt("`palpite2`"));
+               a.setData_criada(rs.getDate("data_criada"));
+               
             
             }
             
@@ -100,46 +104,12 @@ public class MyDAOAposta implements IDAOAposta{
         return a;
     } 
     
-    @Override
-    public Set<Aposta> recuperarPelaData(Date data) throws Exception {
-        Set<Aposta> a=new HashSet();
-            
-        String SQL="Select * from `aposta` WHERE `data_criada`=?";
-        
-        try {
-            
-            
-            PreparedStatement stmt = this.connection.prepareStatement(SQL);      
-            stmt.setDate(1, data);
-            ResultSet rs = stmt.executeQuery();
-            
-            while(rs.next()){
-               
-           
-               IDAOPartida pdao= new MyDAOPartida();
-               IDAOPerfil pfdao= new MyDAOPerfil();
-               
-               a.add(new Aposta(pfdao.recuperarPeloId(rs.getInt("`perfil_id`")),pdao.recuperarPeloId(rs.getInt("`partida_id`")), rs.getInt("`palpite1`"), rs.getInt("`palpite2`")));
-               for(Aposta ap:a){
-               ap.setData_criada(data);
-               ap.setId(rs.getInt("id"));
-               }
-            }
-            
-           } catch (SQLException e) {
-               throw new RuntimeException(e);
-        }finally{
-          this.connection.close();
-        }
-        
-        return a;
-    } 
     
 
     @Override
-    public Set<Aposta> recuperarPelaIdPartida(int idPartida) throws Exception {
+    public Set<Aposta> buscarPorIdPartida(int idPartida) throws Exception {
         
-        Set<Aposta> a=new HashSet();
+        Set<Aposta> as=new HashSet();
     
                
         String SQL="Select * from `aposta` WHERE `partida_id`=?";
@@ -155,12 +125,17 @@ public class MyDAOAposta implements IDAOAposta{
                          
                IDAOPartida pdao= new MyDAOPartida();
                IDAOPerfil pfdao= new MyDAOPerfil();
+               Aposta a = new Aposta();
                
-               a.add(new Aposta(pfdao.recuperarPeloId(rs.getInt("`perfil_id`")),pdao.recuperarPeloId(idPartida), rs.getInt("`palpite1`"), rs.getInt("`palpite2`")));
-               for(Aposta ap:a){
-               ap.setData_criada(rs.getDate("data_criada"));
-               ap.setId(rs.getInt("id"));
-               }
+               a.setId(rs.getInt("id"));
+               a.setJogador(pfdao.carregar(rs.getInt("`perfil_id`")));
+               a.setPartida(pdao.recuperarPeloId(rs.getInt("`partida_id`")));
+               a.setPalpite1(rs.getInt("`palpite1`"));
+               a.setPalpite2(rs.getInt("`palpite2`"));
+               a.setData_criada(rs.getDate("data_criada"));
+               
+               as.add(a);
+          
             }
             
            } catch (SQLException e) {
@@ -169,12 +144,12 @@ public class MyDAOAposta implements IDAOAposta{
           this.connection.close();
         }
         
-        return a;
+        return as;
     } 
 
     @Override
-    public Set<Aposta> recuperarPeloIdPerfil(int idperfil) throws Exception {
-        Set<Aposta> a=new HashSet();
+    public Set<Aposta> carregarPorIdPerfil(int idperfil) throws Exception {
+        Set<Aposta> as=new HashSet();
 
                
         String SQL="Select * from `aposta` WHERE `perfil_id`=?";
@@ -190,12 +165,17 @@ public class MyDAOAposta implements IDAOAposta{
                              
                IDAOPartida pdao= new MyDAOPartida();
                IDAOPerfil pfdao= new MyDAOPerfil();
+               Aposta a = new Aposta();
                
-               a.add(new Aposta(pfdao.recuperarPeloId(idperfil),pdao.recuperarPeloId(rs.getInt("`partida_id`")), rs.getInt("`palpite1`"), rs.getInt("`palpite2`")));
-               for(Aposta ap:a){
-               ap.setData_criada(rs.getDate("data_criada"));
-               ap.setId(rs.getInt("id"));
-               }
+               a.setId(rs.getInt("id"));
+               a.setJogador(pfdao.carregar(rs.getInt("`perfil_id`")));
+               a.setPartida(pdao.recuperarPeloId(rs.getInt("`partida_id`")));
+               a.setPalpite1(rs.getInt("`palpite1`"));
+               a.setPalpite2(rs.getInt("`palpite2`"));
+               a.setData_criada(rs.getDate("data_criada"));
+               
+               as.add(a);
+          
             }
             
            } catch (SQLException e) {
@@ -204,12 +184,12 @@ public class MyDAOAposta implements IDAOAposta{
           this.connection.close();
         }
         
-        return a;
+        return as;
     } 
 
     @Override
-    public Aposta recuperarPeloIdPerfilAndPartida(int idperfil, int idpartida) throws Exception {
-        Aposta a=null;
+    public Aposta buscarPorPerfilAndPartida(int idperfil, int idpartida) throws Exception {
+        Aposta a= new Aposta();
                     
         String SQL="Select * from `aposta` WHERE `partida_id`=? AND `perfil_id`=?";
         
@@ -226,12 +206,15 @@ public class MyDAOAposta implements IDAOAposta{
                IDAOPartida pdao= new MyDAOPartida();
                IDAOPerfil pfdao= new MyDAOPerfil();
                
-               a=new Aposta(pfdao.recuperarPeloId(idperfil),pdao.recuperarPeloId(idpartida), rs.getInt("`palpite1`"), rs.getInt("`palpite2`"));
-               a.setData_criada(rs.getDate("data_criada"));
+                             
                a.setId(rs.getInt("id"));
-               }
-            
-            
+               a.setJogador(pfdao.carregar(rs.getInt("`perfil_id`")));
+               a.setPartida(pdao.recuperarPeloId(rs.getInt("`partida_id`")));
+               a.setPalpite1(rs.getInt("`palpite1`"));
+               a.setPalpite2(rs.getInt("`palpite2`"));
+               a.setData_criada(rs.getDate("data_criada"));
+                   
+               }           
            } catch (SQLException e) {
                throw new RuntimeException(e);
         }finally{
@@ -243,7 +226,7 @@ public class MyDAOAposta implements IDAOAposta{
 
     @Override
     public Set<Aposta> recuperarPeloStatus(String status) throws Exception {
-       Set<Aposta> a=new HashSet();
+       Set<Aposta> as=new HashSet();
                       
         String SQL="Select * from `aposta` WHERE `status`=?";
         
@@ -258,12 +241,16 @@ public class MyDAOAposta implements IDAOAposta{
                            
                IDAOPartida pdao= new MyDAOPartida();
                IDAOPerfil pfdao= new MyDAOPerfil();
+               Aposta a = new Aposta();
                
-               a.add(new Aposta(pfdao.recuperarPeloId(rs.getInt("`perfil_id`")),pdao.recuperarPeloId(rs.getInt("`partida_id`")), rs.getInt("`palpite1`"), rs.getInt("`palpite2`")));
-               for(Aposta ap:a){
-               ap.setData_criada(rs.getDate("data_criada"));
-               ap.setId(rs.getInt("id"));
-               }
+               a.setId(rs.getInt("id"));
+               a.setJogador(pfdao.carregar(rs.getInt("`perfil_id`")));
+               a.setPartida(pdao.recuperarPeloId(rs.getInt("`partida_id`")));
+               a.setPalpite1(rs.getInt("`palpite1`"));
+               a.setPalpite2(rs.getInt("`palpite2`"));
+               a.setData_criada(rs.getDate("data_criada"));
+               
+               as.add(a);
             }
             
            } catch (SQLException e) {
@@ -271,18 +258,16 @@ public class MyDAOAposta implements IDAOAposta{
         }finally{
           this.connection.close();
         }
-        
-        return a;
+       return as;
     } 
 
     @Override
     public Set<Aposta> recuperarPeloStatusAndIdPerfil(String status, int idPerfil) throws Exception {
-        Set<Aposta> a=new HashSet();
+        Set<Aposta> as=new HashSet();
                   
         String SQL="Select * from `aposta` WHERE `status`=? AND `idPerfil`=?";
         
-        try {
-            
+        try {            
             
             PreparedStatement stmt = this.connection.prepareStatement(SQL);      
             stmt.setInt(1, idPerfil);
@@ -293,12 +278,17 @@ public class MyDAOAposta implements IDAOAposta{
                            
                IDAOPartida pdao= new MyDAOPartida();
                IDAOPerfil pfdao= new MyDAOPerfil();
+              
+               Aposta a = new Aposta();
                
-               a.add(new Aposta(pfdao.recuperarPeloId(idPerfil),pdao.recuperarPeloId(rs.getInt("`partida_id`")), rs.getInt("`palpite1`"), rs.getInt("`palpite2`")));
-               for(Aposta ap:a){
-               ap.setData_criada(rs.getDate("data_criada"));
-               ap.setId(rs.getInt("id"));
-               }
+               a.setId(rs.getInt("id"));
+               a.setJogador(pfdao.carregar(rs.getInt("`perfil_id`")));
+               a.setPartida(pdao.recuperarPeloId(rs.getInt("`partida_id`")));
+               a.setPalpite1(rs.getInt("`palpite1`"));
+               a.setPalpite2(rs.getInt("`palpite2`"));
+               a.setData_criada(rs.getDate("data_criada"));
+               
+               as.add(a);
             }
             
            } catch (SQLException e) {
@@ -307,14 +297,14 @@ public class MyDAOAposta implements IDAOAposta{
           this.connection.close();
         }
         
-        return a;
+        return as;
     } 
 
    
 
     @Override
     public Set<Aposta> recuperarTodos() throws Exception {
-        Set<Aposta> a=new HashSet();
+        Set<Aposta> as=new HashSet();
                   
         String SQL="Select * from `aposta`";
         
@@ -328,12 +318,16 @@ public class MyDAOAposta implements IDAOAposta{
                        
                IDAOPartida pdao= new MyDAOPartida();
                IDAOPerfil pfdao= new MyDAOPerfil();
+               Aposta a = new Aposta();
                
-               a.add(new Aposta(pfdao.recuperarPeloId(rs.getInt("`perfil_id`")),pdao.recuperarPeloId(rs.getInt("`perfil_id`")), rs.getInt("`palpite1`"), rs.getInt("`palpite2`")));
-               for(Aposta ap:a){
-               ap.setData_criada(rs.getDate("data_criada"));
-               ap.setId(rs.getInt("id"));
-               }
+               a.setId(rs.getInt("id"));
+               a.setJogador(pfdao.carregar(rs.getInt("`perfil_id`")));
+               a.setPartida(pdao.recuperarPeloId(rs.getInt("`partida_id`")));
+               a.setPalpite1(rs.getInt("`palpite1`"));
+               a.setPalpite2(rs.getInt("`palpite2`"));
+               a.setData_criada(rs.getDate("data_criada"));
+               
+               as.add(a);
             }
             
            } catch (SQLException e) {
@@ -342,7 +336,7 @@ public class MyDAOAposta implements IDAOAposta{
           this.connection.close();
         }
         
-        return a;
+        return as;
     } 
     
     

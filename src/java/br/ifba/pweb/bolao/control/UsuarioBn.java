@@ -26,14 +26,12 @@ public class UsuarioBn {
         private Usuario	usuario;
 	private String confirmarSenha;
 	private Set<Usuario> lista;
-	private String destinoSalvar;
 	private String	permissao;
-	private Perfil conta;
+	private Perfil perfil;
 
 	public String novo() {
-		this.destinoSalvar = "usuarioSucesso";
 		this.usuario = new Usuario();
-                this.conta= new Perfil();
+                this.perfil= new Perfil();
 		return "usuario";
 	}
 
@@ -55,11 +53,10 @@ public class UsuarioBn {
 		NUsuario usuarioRN = new NUsuario();
 		usuarioRN.salvar(this.usuario);
 
-		if (!this.conta.getNome().isEmpty()) {
-			this.conta.setUsuario(this.usuario);
-                        NPerfil contaRN = new NPerfil();
-                        contaRN.ativar(this.conta);
-			contaRN.salvar(this.conta);
+		if (!this.perfil.getNome().isEmpty()) {
+			this.perfil.setUsuario(this.usuario);
+                        NPerfil perfilRN = new NPerfil();
+                        perfilRN.salvar(this.perfil);
 		}
              return "salvo com sucesso";   
         }	
@@ -95,14 +92,7 @@ public class UsuarioBn {
 		this.confirmarSenha = confirmarSenha;
 	}
 
-	public String getDestinoSalvar() {
-		return destinoSalvar;
-	}
-
-	public void setDestinoSalvar(String destinoSalvar) {
-		this.destinoSalvar = destinoSalvar;
-	}
-
+	
 	public String getPermissao() {
 		return permissao;
 	}
@@ -111,11 +101,11 @@ public class UsuarioBn {
 		this.permissao = permissao;
 	}
 
-	public Perfil getConta() {
-		return conta;
+	public Perfil getPerfil() {
+		return perfil;
 	}
 
-	public void setConta(Perfil conta) {
-		this.conta = conta;
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
 	}
 }

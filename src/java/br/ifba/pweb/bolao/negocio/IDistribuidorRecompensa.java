@@ -14,8 +14,8 @@ import java.util.Set;
  *
  * @author lisy
  */
-public interface ICalculadoraApostas {
+public interface IDistribuidorRecompensa {
 
-    public Set<Perfil> calculaVencedor(Partida partida) throws Exception;
+   public  void distribuir(Set<Perfil> vencedores, Partida partida) throws Exception;
     
 }

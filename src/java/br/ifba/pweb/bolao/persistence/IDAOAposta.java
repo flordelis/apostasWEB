@@ -18,13 +18,12 @@ import java.util.Set;
 public interface IDAOAposta {
     
     public void salvar(Aposta a)throws Exception;
-    public void atualizarStatus(Aposta a)throws Exception;
-    public Aposta recuperarPorId(int id) throws Exception;
-    Set<Aposta> recuperarPelaData(Date data)throws Exception;
-    public Set<Aposta> recuperarPelaIdPartida(int idpartida)throws Exception;
-    public Set<Aposta> recuperarPeloIdPerfil(int idperfil)throws Exception;
+    public void atualizar(Aposta a)throws Exception;
+    public Aposta carregar(int id) throws Exception;
+    public Set<Aposta> buscarPorIdPartida(int idPartida)throws Exception;
+    public Set<Aposta> carregarPorIdPerfil(int idPerfil)throws Exception;
     //public Set<Aposta> recuperarPeloIdPerfilAndData(int idperfil, Date data)throws Exception;
-    public Aposta recuperarPeloIdPerfilAndPartida(int idperfil, int idpartida)throws Exception;
+    public Aposta buscarPorPerfilAndPartida(int idPerfil, int idpartida)throws Exception;
     public Set<Aposta> recuperarPeloStatus(String status)throws Exception;
     public Set<Aposta> recuperarPeloStatusAndIdPerfil(String status, int idPerfil)throws Exception;
    //  public Set<Aposta> recuperarPeloStatusAndData(String status, Date data)throws Exception;

@@ -6,20 +6,37 @@
 
 package br.ifba.pweb.bolao.negocio;
 
+
 import br.ifba.pweb.bolao.base.Perfil;
+import br.ifba.pweb.bolao.persistence.DaoFactory;
+import br.ifba.pweb.bolao.persistence.IDAOPerfil;
+import java.sql.Date;
+
+
 
 /**
  *
  * @author lisy
  */
 public class NPerfil {
+    
+    private IDAOPerfil	perfilDAO;
 
-    public void salvar(Perfil conta) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+	public NPerfil() {
+		this.perfilDAO = DaoFactory.criarPerfilDAO();
+	}
 
-    public void ativar(Perfil conta) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+	public Perfil carregar(Integer perfil) throws Exception {
+		return this.perfilDAO.carregar(perfil);
+	}
+
+	public void salvar(Perfil perfil) throws Exception {
+                long dt = System.currentTimeMillis();
+		perfil.setData_criacao(new Date(dt));
+		this.perfilDAO.salvar(perfil);
+	}
+
+        
+       
     
 }

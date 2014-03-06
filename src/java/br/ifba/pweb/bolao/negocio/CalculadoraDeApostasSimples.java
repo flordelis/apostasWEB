@@ -9,31 +9,32 @@ package br.ifba.pweb.bolao.negocio;
 import br.ifba.pweb.bolao.base.Aposta;
 import br.ifba.pweb.bolao.base.Partida;
 import br.ifba.pweb.bolao.base.Perfil;
-import br.ifba.pweb.bolao.persistence.DaoFactory;
-import br.ifba.pweb.bolao.persistence.IDAOAposta;
 import java.util.HashSet;
 import java.util.Set;
+import javax.faces.bean.ManagedBean;
 
 /**
  *
  * @author lisy
  */
-public class CalculadoraDeApostas implements ICalculadoraApostas{
+@ManagedBean(name = "CalculadoraApostas")
+public final class CalculadoraDeApostasSimples implements ICalculadoraApostas{
     
-    IDAOAposta apostaDao;
-    Set<Aposta> apostas;
-    Partida partida;
+   
+    IDistribuidorRecompensa distribuidor;
 
-    public CalculadoraDeApostas(Partida partida) throws Exception {
-      this.apostaDao= DaoFactory.criarApostaDAO();  
-      apostas= (Set<Aposta>) apostaDao.recuperarPelaIdPartida(partida.getId());
-        
+    public CalculadoraDeApostasSimples() throws Exception {
+    distribuidor = new DistribuidorRecompensaValorFixo();
     }
   
     
     
     @Override
-    public Set<Perfil> calculaVencedor() throws Exception{
+     public Set<Perfil> calculaVencedor(Partida partida) throws Exception{
+        Set<Aposta> apostas;
+        NAposta apostaN = new NAposta();
+        apostas= apostaN.buscarPorIdPartida(partida.getId());
+        NPerfil perfilN = new NPerfil();
         Set<Perfil> vencedores= new HashSet();
              
        for(Aposta aposta: apostas){
@@ -53,8 +54,16 @@ public class CalculadoraDeApostas implements ICalculadoraApostas{
                 vencedores.add(aposta.getJogador());
          }     
        }
+       
+       distribuidor.distribuir(vencedores, partida);
+       for(Perfil vencedor:vencedores){
+            perfilN.salvar(vencedor);
+          
+       }
+       
       for(Aposta aposta: apostas){
           for(Perfil vencedor:vencedores){
+             
           if(aposta.getJogador().getId()==vencedor.getId()){
           aposta.setStatus("ganhou");
           }
@@ -62,11 +71,13 @@ public class CalculadoraDeApostas implements ICalculadoraApostas{
           aposta.setStatus("perdeu");
           }
           
-          apostaDao.atualizarStatus(aposta);
+          
+          apostaN.salvar(aposta);
+          
+          
+        }
       }
-      }
-       
-       
+              
     return vencedores;
     }
     
