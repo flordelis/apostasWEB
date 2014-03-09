@@ -8,6 +8,7 @@ package br.ifba.pweb.bolao.base;
 
 import java.sql.Time;
 import java.util.Calendar;
+import java.util.Set;
 
 
 /**
@@ -24,6 +25,15 @@ public class Partida {
     private Nacao adver2;
     private int placar1;
     private int placar2;
+    private Set<Aposta> apostas;
+
+    public Set<Aposta> getApostas() {
+        return apostas;
+    }
+
+    public void setApostas(Set<Aposta> apostas) {
+        this.apostas = apostas;
+    }
 
     public Partida(String fase, Sede sede, Calendar data, Time horario, Nacao adver1, Nacao adver2) {
         this.fase = fase;

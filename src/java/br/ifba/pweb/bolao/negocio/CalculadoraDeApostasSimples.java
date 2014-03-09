@@ -11,40 +11,41 @@ import br.ifba.pweb.bolao.base.Partida;
 import br.ifba.pweb.bolao.base.Perfil;
 import java.util.HashSet;
 import java.util.Set;
-import javax.faces.bean.ManagedBean;
 
 /**
  *
  * @author lisy
  */
-@ManagedBean(name = "CalculadoraApostas")
-public final class CalculadoraDeApostasSimples implements ICalculadoraApostas{
-    
-   
-    IDistribuidorRecompensa distribuidor;
 
-    public CalculadoraDeApostasSimples() throws Exception {
-    distribuidor = new DistribuidorRecompensaValorFixo();
+public final class CalculadoraDeApostasSimples {
+    
+  
+    Set<Perfil> vencedores;
+    Partida partida;
+    private int valorTotal;
+    private int recompensa;
+   
+
+    public CalculadoraDeApostasSimples(Partida partida) throws Exception {
+    //distribuidor = new DistribuidorRecompensaValorFixo();
+    vencedores= new HashSet();
+    this.partida=partida;
+    calculaValorTotal();
+    calculaRecompensa();
     }
   
-    
-    
-    @Override
-     public Set<Perfil> calculaVencedor(Partida partida) throws Exception{
-        Set<Aposta> apostas;
-        NAposta apostaN = new NAposta();
-        apostas= apostaN.buscarPorIdPartida(partida.getId());
-        NPerfil perfilN = new NPerfil();
-        Set<Perfil> vencedores= new HashSet();
-             
-       for(Aposta aposta: apostas){
+    public void calculaVencedor() throws Exception{      
+        
+        
+        
+       for(Aposta aposta: partida.getApostas()){
         if((partida.getPlacar1()==aposta.getPalpite1()) && (partida.getPlacar2()==aposta.getPalpite2()))
        {
            vencedores.add(aposta.getJogador());
        }
        }
        
-       for(Aposta aposta: apostas){
+       for(Aposta aposta: partida.getApostas()){
           if(vencedores.isEmpty()) {
              if((partida.getPlacar1()>partida.getPlacar2())&&(aposta.getPalpite1()>aposta.getPalpite2()))
                  vencedores.add(aposta.getJogador());
@@ -55,13 +56,9 @@ public final class CalculadoraDeApostasSimples implements ICalculadoraApostas{
          }     
        }
        
-       distribuidor.distribuir(vencedores, partida);
-       for(Perfil vencedor:vencedores){
-            perfilN.salvar(vencedor);
-          
-       }
+              
        
-      for(Aposta aposta: apostas){
+      for(Aposta aposta: partida.getApostas()){
           for(Perfil vencedor:vencedores){
              
           if(aposta.getJogador().getId()==vencedor.getId()){
@@ -71,14 +68,39 @@ public final class CalculadoraDeApostasSimples implements ICalculadoraApostas{
           aposta.setStatus("perdeu");
           }
           
-          
+          NAposta apostaN = new NAposta();
           apostaN.salvar(aposta);
+          }    
           
-          
-        }
       }
+     }
+   
+      public void distribuir() throws Exception {        
+            for(Perfil vencedor: vencedores){
+              vencedor.addCredito(recompensa);
               
-    return vencedores;
+            }
+            for(Perfil vencedor:vencedores){
+            NPerfil perfilN = new NPerfil();    
+            perfilN.salvar(vencedor);
+             
+           }
+    }
+         
+    private void calculaRecompensa(){
+      this.recompensa=this.valorTotal/vencedores.size();
     }
     
-  }
+  
+    
+    private void calculaValorTotal(){
+       
+       for(Aposta a:partida.getApostas()){
+         this.valorTotal+=5;
+       }
+    
+        }
+}
+
+    
+

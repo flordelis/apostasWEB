@@ -26,7 +26,7 @@ public class NPerfil {
 		this.perfilDAO = DaoFactory.criarPerfilDAO();
 	}
 
-	public Perfil carregar(Integer perfil) throws Exception {
+   	public Perfil carregar(Integer perfil) throws Exception {
 		return this.perfilDAO.carregar(perfil);
 	}
 
@@ -37,6 +37,14 @@ public class NPerfil {
 	}
 
         
-       
+    public Perfil buscarPorIdUsuario(int iduser)throws Exception{
+            return this.buscarPorIdUsuario(iduser);
+            
+    }
+    public String buscarPorNome(String nome)throws Exception{
+            return this.buscarPorNome(nome);
+    }
+    }
+   // public Set<Perfil> listar() throws Exception;  
     
-}
+

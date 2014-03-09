@@ -7,6 +7,7 @@
 package br.ifba.pweb.bolao.base;
 
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -19,10 +20,16 @@ public class Perfil {
     private String nome;
     private int credito;
     private  Date data_criacao;
-    private Set<Aposta> apostas;
     private boolean ativo;
     private Usuario usuario;
-    
+
+    @Override
+    public String toString() {
+        return "Perfil{" + "id=" + id + ", nome=" + nome + ", credito=" + credito + ", data_criacao=" + data_criacao + ", ativo=" + ativo + ", usuario=" + usuario + '}';
+    }
+
+   
+
         
     public int getId() {
         return id;
@@ -53,18 +60,24 @@ public class Perfil {
     }
 
     public void setData_criacao(Date data_criacao) {
-       // this.data_criacao = data_criacao;
-        data_criacao= new Date(2044,13,13);
+       this.data_criacao = data_criacao;
+   
     }
 
-    public Set<Aposta> getApostas() {
-        return apostas;
-    }
-
-    public void setApostas(Set<Aposta> apostas) {
-        this.apostas = apostas;
-    }
-
+//    public Set<Aposta> getApostas() {
+//        return apostas;
+//    }
+//
+//    public  String addAposta(Aposta aposta) throws Exception{
+//         if(this.getCredito()>aposta.getTaxa()){
+//           this.debitCredito(aposta.getTaxa());
+//           this.getApostas().add(aposta);
+//          return "Aposta realizada com sucesso";
+//         }else{
+//         return "Operacao não realizada";
+//         }
+//     
+//    }
     public boolean isAtivo() {
         return ativo;
     }
@@ -81,6 +94,11 @@ public class Perfil {
         this.usuario = usuario;
     }
 
+    public void debitCredito(int valor){
+         this.credito -=credito;
+    }
+    
+    
     public void addCredito(int valor) {
      this.credito+=valor;
     }

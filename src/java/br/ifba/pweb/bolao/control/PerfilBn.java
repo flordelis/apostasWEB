@@ -16,10 +16,10 @@ import java.util.Set;
  * @author lisy
  */
 public class PerfilBn {
-     public Set<Aposta> adicionarApostas(Perfil perfil, Aposta aposta) throws Exception{
-            perfil.getApostas().add(aposta);
-            NAposta apostaN = new NAposta();
-            apostaN.salvar(aposta);
-        return null;
-        }
+////     public Set<Aposta> adicionarApostas(Perfil perfil, Aposta aposta) throws Exception{
+////            perfil.getApostas().add(aposta);
+////            NAposta apostaN = new NAposta();
+////            apostaN.salvar(aposta);
+////        return null;
+//        }
 }

@@ -15,6 +15,11 @@ import java.util.Calendar;
  */
 public class Aposta {
     private int id;
+    private final int taxa=5;
+
+    public int getTaxa() {
+        return taxa;
+    }
     private Perfil jogador;
     private Date data_criada;
     private Partida partida;

@@ -76,8 +76,8 @@ public class MyDAOUsuario implements IDAOUsuario{
 
     @Override
     public Usuario buscarPorLogin(String login) throws Exception{
-       Usuario u = null; 
-       String sql="SELETE * FROM `usuario` WHERE `login`=?;";
+       Usuario u=null;
+       String sql="SELECT * FROM `usuario` WHERE `login`=?;";
         try{
             IDAOPerfil pdao = new MyDAOPerfil();
             PreparedStatement stmt = connection.prepareStatement(sql); 
@@ -85,10 +85,10 @@ public class MyDAOUsuario implements IDAOUsuario{
             ResultSet rs= stmt.executeQuery();
             while(rs.next()){
                 u=new Usuario();
-                u.setId(rs.getInt("`id`"));
-                u.setLogin(rs.getString("`login`"));
-                u.setSenha(rs.getString("`senha`"));
-                u.setPermissao(rs.getString("`permissao`"));
+                u.setId(rs.getInt("id"));
+                u.setLogin(rs.getString("login"));
+                u.setSenha(rs.getString("senha"));
+                u.setPermissao(rs.getString("permissao"));
             
              }
               
@@ -127,20 +127,18 @@ public class MyDAOUsuario implements IDAOUsuario{
     @Override
     public Usuario carregar(Integer codigo) throws Exception {
            
-      Usuario u = null; 
-       String sql="SELETE * FROM `usuario` WHERE `id`=?;";
+      Usuario u = new Usuario(); 
+      String SQL="SELECT * FROM `usuario` WHERE `id`=?";
         
        try{
-            IDAOPerfil pdao = new MyDAOPerfil();
-            PreparedStatement stmt = connection.prepareStatement(sql); 
+            PreparedStatement stmt = connection.prepareStatement(SQL); 
             stmt.setInt(1, codigo);
             ResultSet rs= stmt.executeQuery();
             while(rs.next()){
-                u=new Usuario();
-                u.setId(rs.getInt("`id`"));
-                u.setLogin(rs.getString("`login`"));
-                u.setSenha(rs.getString("`senha`"));
-                u.setPermissao(rs.getString("`permissao`"));      
+                u.setId(rs.getInt("id"));
+                u.setLogin(rs.getString("login"));
+                u.setSenha(rs.getString("senha"));
+                u.setPermissao(rs.getString("permissao"));      
              }
                   
          stmt.close();

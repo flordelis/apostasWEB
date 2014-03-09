@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>login</title>
+    </h:head>
+    <h:body>
+        <h:panelGroup rendered="#{!empty param.login_error}">
+            <span style="color:red"> Erro ao efetuar o login.</span><br />
+            Motivo:#{SPRING_SECURITY_LAST_EXCEPTION.message}
+        </h:panelGroup> 
+        
+        <form id ="login_m" method="POST" action="#{request.contextPath}/j_spring_security_check">
+            <table>
+                <tr>
+                    <td>Login:</td>
+                    <td> <input type="text" name="j_username" value="login" /></td>
+                </tr>
+                <tr>
+                    <td>Senha:</td>
+                    <td><input type="password" name="j_password" value="senha" /></td>
+                </tr>
+                <tr>
+                    <td> <input type="submit" value="Entrar" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </h:body>
+</html>
+

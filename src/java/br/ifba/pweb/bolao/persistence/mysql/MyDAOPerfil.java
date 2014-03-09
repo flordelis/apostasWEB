@@ -24,6 +24,7 @@ import java.util.Set;
 public class MyDAOPerfil implements IDAOPerfil{
 
     Connection connection;
+    private MyDAOUsuario IDAOUsuario;
             
     public MyDAOPerfil() {
         connection = new ConnexaoFactory().getConnection();
@@ -72,7 +73,7 @@ public class MyDAOPerfil implements IDAOPerfil{
     @Override
     public Perfil carregar(int id) throws Exception {
         Perfil p= new Perfil();
-        String SQL="Select * from `perfil` WHERE `id`=?";
+        String SQL="SELECT * FROM `perfil` WHERE `id`=?";
         try {
             
             
@@ -82,7 +83,9 @@ public class MyDAOPerfil implements IDAOPerfil{
             
             while(rs.next()){
                p.setNome(rs.getString("nome"));
-               p.setData_criacao(rs.getDate("data_criada"));
+                IDAOUsuario  u= new MyDAOUsuario();
+               p.setUsuario(u.carregar(rs.getInt("usuario_id")));
+               p.setData_criacao(rs.getDate("datacriacao"));
                p.setId(rs.getInt("id"));
                p.setCredito(rs.getInt("credito"));
             
@@ -100,7 +103,7 @@ public class MyDAOPerfil implements IDAOPerfil{
     @Override
     public Perfil buscarPorIdUsuario(int iduser) throws Exception {
          Perfil p= new Perfil();
-        String SQL="Select `p.nome`, `p.data_criada`, `p.id`, `p.credito` from `perfil` p, `usuario` u WHERE p.`id`==u.`id_perfil` and u.`id_perfil`= ?";
+        String SQL="Select p.`nome`, p.`datacriada`, p.`id`, p.`credito` from `perfil` p, `usuario` u WHERE p.`usuario_id`==u.`id_perfil`";
         try {
             
             
@@ -110,9 +113,9 @@ public class MyDAOPerfil implements IDAOPerfil{
             
             while(rs.next()){
                p.setNome(rs.getString("nome"));
-               p.setData_criacao(rs.getDate("`p.data_criada`"));
-               p.setId(rs.getInt("`p.id`"));
-               p.setCredito(rs.getInt("`p.credito`"));
+               p.setData_criacao(rs.getDate("`p.datacriacao`"));
+               p.setId(rs.getInt("p.id"));
+               p.setCredito(rs.getInt("p.credito"));
             
             }
             

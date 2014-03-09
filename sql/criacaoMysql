@@ -1,0 +1,100 @@
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
+
+ALTER SCHEMA `bolaoonline`  DEFAULT CHARACTER SET utf8  DEFAULT COLLATE utf8_general_ci ;
+
+USE `bolaoonline`;
+
+CREATE  TABLE IF NOT EXISTS `bolaoonline`.`usuario` (
+  `idusuario` INT(11) NOT NULL AUTO_INCREMENT ,
+  `login` VARCHAR(45) NOT NULL ,
+  `senha` VARCHAR(45) NOT NULL ,
+  `permissao` VARCHAR(45) NOT NULL ,
+  PRIMARY KEY (`idusuario`) )
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
+
+CREATE  TABLE IF NOT EXISTS `bolaoonline`.`perfil` (
+  `idperfil` INT(11) NOT NULL AUTO_INCREMENT ,
+  `usuario_id` INT(11) NOT NULL ,
+  `nome` VARCHAR(45) NOT NULL ,
+  `credito` INT(11) NOT NULL DEFAULT '10' ,
+  `dt_criacao` DATE NULL DEFAULT NULL ,
+  PRIMARY KEY (`idperfil`) ,
+  UNIQUE INDEX `usuario_id_UNIQUE` (`usuario_id` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
+
+CREATE  TABLE IF NOT EXISTS `bolaoonline`.`sede` (
+  `idsede` INT(11) NOT NULL AUTO_INCREMENT ,
+  `nome` VARCHAR(45) NOT NULL ,
+  PRIMARY KEY (`idsede`) ,
+  UNIQUE INDEX `nome_UNIQUE` (`nome` ASC) )
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
+
+CREATE  TABLE IF NOT EXISTS `bolaoonline`.`nacao` (
+  `idnacao` INT(11) NOT NULL AUTO_INCREMENT ,
+  `nome` VARCHAR(45) NOT NULL ,
+  `grupo` VARCHAR(45) NOT NULL ,
+  `sigla` VARCHAR(45) NOT NULL ,
+  PRIMARY KEY (`idnacao`) ,
+  UNIQUE INDEX `nome_UNIQUE` (`nome` ASC) ,
+  UNIQUE INDEX `sigla_UNIQUE` (`sigla` ASC) )
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
+
+CREATE  TABLE IF NOT EXISTS `bolaoonline`.`partida` (
+  `idpartida` INT(11) NOT NULL AUTO_INCREMENT ,
+  `nacao_idA` INT(11) NOT NULL ,
+  `placarA` TINYINT(4) NULL DEFAULT NULL ,
+  `nacao_idB` INT(11) NOT NULL ,
+  `placarB` TINYINT(4) NULL DEFAULT NULL ,
+  `sede_id` INT(11) NOT NULL ,
+  `dt_realizacao` DATE NOT NULL ,
+  `fase` CHAR(2) NOT NULL ,
+  `horario` TIME NOT NULL ,
+  PRIMARY KEY (`idpartida`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
+
+CREATE  TABLE IF NOT EXISTS `bolaoonline`.`aposta` (
+  `idaposta` INT(11) NOT NULL AUTO_INCREMENT ,
+  `perfil_id` INT(11) NOT NULL ,
+  `partida_id` INT(11) NOT NULL ,
+  `palptiteA` TINYINT(4) NOT NULL ,
+  `palpiteB` TINYINT(4) NOT NULL ,
+  `status` VARCHAR(45) NULL DEFAULT NULL ,
+  `dt_cadastro` DATE NOT NULL ,
+  UNIQUE INDEX `idaposta_UNIQUE` (`idaposta` ASC) ,
+  PRIMARY KEY (`perfil_id`, `partida_id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
+
+
+-- -----------------------------------------------------
+-- Placeholder table for view `bolaoonline`.`partidavw`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bolaoonline`.`partidavw` (`codigo` INT, `fase` INT, `grupo` INT, `selecaoA` INT, `placarA` INT, `selecaoB` INT, `placarB` INT, `data da partida` INT, `horario` INT, `cidade` INT);
+
+
+USE `bolaoonline`;
+
+-- -----------------------------------------------------
+-- View `bolaoonline`.`partidavw`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `bolaoonline`.`partidavw`;
+USE `bolaoonline`;
+CREATE  OR REPLACE VIEW `bolaoonline`.`partidavw` AS
+SELECT `partida`.`idpartida` AS `codigo`,`partida`.`fase` AS `fase`,n1.`grupo` AS `grupo`,`n1`.`nome` AS `selecaoA`, `partida`.`placarA` AS `placarA`,n2.`nome` AS `selecaoB`, `partida`.`placarB` AS `placarB`,`partida`.`dt_realizacao` AS `data da partida`,`partida`.`horario` AS `horario`,`sede`.`nome` AS `cidade` from (((`partida` left join `nacao` n1 on((n1.`idnacao` = `partida`.`nacao_idA`))) left join `sede` on((`partida`.`sede_id` = `sede`.`idsede`))) left join `nacao` n2 on((n2.`idnacao` = `partida`.`nacao_idB`)));
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
