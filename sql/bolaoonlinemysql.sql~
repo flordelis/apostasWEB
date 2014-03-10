@@ -1,0 +1,94 @@
+CREATE  TABLE IF NOT EXISTS `bolaoonline`.`usuario` (
+  `idusuario` INT(11) NOT NULL ,
+  `login` VARCHAR(45) NULL DEFAULT NULL ,
+  `senha` VARCHAR(45) NULL DEFAULT NULL ,
+  `permissao` VARCHAR(45) NULL DEFAULT NULL ,
+  PRIMARY KEY (`idusuario`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+
+CREATE  TABLE IF NOT EXISTS `bolaoonline`.`perfil` (
+  `idperfil` INT(11) NOT NULL AUTO_INCREMENT ,
+  `usuario_idusuario` INT(11) NOT NULL ,
+  `nome` VARCHAR(45) NULL DEFAULT NULL ,
+  `credito` INT(11) NULL DEFAULT NULL ,
+  `dt_cadastro` DATE NULL DEFAULT NULL ,
+  PRIMARY KEY (`idperfil`) ,
+  INDEX `fk_perfil_usuario` (`usuario_idusuario` ASC) ,
+  CONSTRAINT `fk_perfil_usuario`
+    FOREIGN KEY (`usuario_idusuario` )
+    REFERENCES `bolaoonline`.`usuario` (`idusuario` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+
+CREATE  TABLE IF NOT EXISTS `bolaoonline`.`nacao` (
+  `idnacao` INT(11) NOT NULL ,
+  `nome` VARCHAR(45) NULL DEFAULT NULL ,
+  `grupo` CHAR(1) NULL DEFAULT NULL ,
+  `sigla` CHAR(2) NULL DEFAULT NULL ,
+  PRIMARY KEY (`idnacao`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+
+
+
+CREATE  TABLE IF NOT EXISTS `bolaoonline`.`sede` (
+  `idsede` INT(11) NOT NULL ,
+  `nome` VARCHAR(45) NULL DEFAULT NULL ,
+  PRIMARY KEY (`idsede`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+
+
+CREATE  TABLE IF NOT EXISTS `bolaoonline`.`partida` (
+  `idpartida` INT(11) NOT NULL AUTO_INCREMENT ,
+  `nacao_idA` INT(11) NOT NULL ,
+  `placarA` VARCHAR(45) NULL DEFAULT NULL ,
+  `nacao_idB` INT(11) NOT NULL ,
+  `placarB` VARCHAR(45) NULL DEFAULT NULL ,
+  `dataRealizacao` VARCHAR(45) NULL DEFAULT NULL ,
+  `horario` VARCHAR(45) NULL DEFAULT NULL ,
+  `sede_idsede` INT(11) NOT NULL ,
+  PRIMARY KEY (`idpartida`) ,
+  INDEX `fk_partida_nacao1` (`nacao_idA` ASC) ,
+  INDEX `fk_partida_nacao2` (`nacao_idB` ASC) ,
+  INDEX `fk_partida_sede1` (`sede_idsede` ASC) ,
+  CONSTRAINT `fk_partida_nacao1`
+    FOREIGN KEY (`nacao_idA` )
+    REFERENCES `bolaoonline`.`nacao` (`idnacao` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_partida_nacao2`
+    FOREIGN KEY (`nacao_idB` )
+    REFERENCES `bolaoonline`.`nacao` (`idnacao` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_partida_sede1`
+    FOREIGN KEY (`sede_idsede` )
+    REFERENCES `bolaoonline`.`sede` (`idsede` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+
+
+CREATE  TABLE IF NOT EXISTS `bolaoonline`.`nacao` (
+  `idnacao` INT(11) NOT NULL ,
+  `nome` VARCHAR(45) NULL DEFAULT NULL ,
+  `grupo` CHAR(1) NULL DEFAULT NULL ,
+  `sigla` CHAR(2) NULL DEFAULT NULL ,
+  PRIMARY KEY (`idnacao`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+
+
+
+

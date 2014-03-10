@@ -50,8 +50,10 @@ public class UsuarioBn {
                 context.addMessage(null, message);
                 return null;
             }
-            
+            PerfilBn perfilBn= new PerfilBn();
+            perfilBn.carregarbyIDUser(user.getId());
             context.getExternalContext().getSessionMap().put(USER_SESSION_KEY, user);
+            
             if(user.getPermissao().equals("ROLE_USER"))
             return "app-main-user";
             else 

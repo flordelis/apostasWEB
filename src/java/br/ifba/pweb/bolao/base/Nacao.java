@@ -12,7 +12,9 @@ package br.ifba.pweb.bolao.base;
  */
 public class Nacao {
   private  int id;
-  private  String nome;  
+  private  String nome; 
+  private String grupo;
+  private String sigla;
 
     public Nacao(int id, String nome) {
         this.id = id;
@@ -27,14 +29,12 @@ public class Nacao {
         this.nome = nome;
     }
 
-    
-
-        
     @Override
     public String toString() {
-        return "Nacao{" + "id=" + id + ", nome=" + nome + '}';
+        return "Nacao{" + "id=" + id + ", nome=" + nome + ", grupo=" + grupo + ", sigla=" + sigla + '}';
     }
 
+   
     public int getId() {
         return id;
     }
@@ -42,6 +42,22 @@ public class Nacao {
     
     public String getNome() {
         return nome;
+    }
+
+    public String getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(String grupo) {
+        this.grupo = grupo;
+    }
+
+    public String getSigla() {
+        return sigla;
+    }
+
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
     }
       
 }

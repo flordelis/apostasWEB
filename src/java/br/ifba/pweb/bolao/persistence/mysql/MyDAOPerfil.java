@@ -8,6 +8,7 @@ package br.ifba.pweb.bolao.persistence.mysql;
 
 //import br.ifba.pweb.bolao.persistence.derby.*;
 import br.ifba.pweb.bolao.base.Perfil;
+import br.ifba.pweb.bolao.base.Usuario;
 import br.ifba.pweb.bolao.persistence.IDAOPerfil;
 import br.ifba.pweb.bolao.persistence.IDAOUsuario;
 import java.sql.Connection;
@@ -101,23 +102,23 @@ public class MyDAOPerfil implements IDAOPerfil{
     } 
     
     @Override
-    public Perfil buscarPorIdUsuario(int iduser) throws Exception {
+    public Perfil buscarPorUsuario(Usuario usuario) throws Exception {
          Perfil p= new Perfil();
-        String SQL="Select * from `perfil`  WHERE usuario_id`=?";
+        String SQL="Select * from perfil WHERE usuario_id=?";
         try {
             
             
             PreparedStatement stmt = this.connection.prepareStatement(SQL);      
-            stmt.setInt(1, iduser);
+            stmt.setInt(1, usuario.getId());
             ResultSet rs = stmt.executeQuery();
             
-            IDAOUsuario  usuarioN = new MyDAOUsuario();
+            IDAOUsuario  usuarioDAO = new MyDAOUsuario();
             while(rs.next()){
-               p.setUsuario(usuarioN.carregar(iduser));
+               p.setUsuario(usuario);
                p.setNome(rs.getString("nome"));
-               p.setData_criacao(rs.getDate("`p.dt_criacao`"));
-               p.setId(rs.getInt("p.idperfil"));
-               p.setCredito(rs.getInt("p.credito"));
+               p.setData_criacao(rs.getDate("dt_criacao"));
+               p.setId(rs.getInt("idperfil"));
+               p.setCredito(rs.getInt("credito"));
             
             }
             

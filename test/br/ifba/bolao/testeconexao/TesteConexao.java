@@ -29,7 +29,7 @@ public class TesteConexao {
             bn.setLogin("lisy");
             Usuario bu=bn.getUsuario();
             NPerfil perfilN = new NPerfil();
-            Perfil perfil= perfilN.carregar(u.getId());
+            Perfil perfil= perfilN.buscarPorIdUsuario(bu.getId());
             //Perfil perfil2= perfilN.buscarPorNome("helis");
             System.out.println(perfil);
             System.out.println(u);

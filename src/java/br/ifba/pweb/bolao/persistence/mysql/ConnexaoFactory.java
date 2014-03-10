@@ -16,7 +16,7 @@ import java.sql.SQLException;
  * @author lisy
  */
 public class ConnexaoFactory {
-     private static final String URL ="jdbc:mysql://192.168.3.20:3306/bolaoonline";
+     private static final String URL ="jdbc:mysql://192.168.56.101:3306/bolaoonline";
      private static final String USER = "helis";
      private static final String PASSWORD="1234";
      //private static final String DRIVER="com.mysql.jdbc.Driver";
