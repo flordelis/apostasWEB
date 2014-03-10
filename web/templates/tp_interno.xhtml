@@ -20,7 +20,7 @@
                     <div  id="marca_icon">
                          <h:graphicImage alt="icone bolao" value="/resources/imagens/marca.png"/>
                     </div>   
-                    <div id="marca">
+                    <div id="messagem">
                          <h2  id="welcome"> Welcome </h2>
                          <h2 id="brand">Bolão Online</h2>
                     <div> 
@@ -28,7 +28,10 @@
         </div>
         <div>
             <div id="left">
-                <ui:insert name="left"></ui:insert>
+               ui:insert name="bottom">
+             <ui:include src="/user/menu.xhtml"/>
+            </ui:insert>  
+
             </div>
             <div id="content" class="left_content">
                 <ui:insert name="content"></ui:insert>

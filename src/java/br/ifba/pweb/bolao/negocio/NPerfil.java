@@ -41,7 +41,7 @@ public class NPerfil {
             return this.buscarPorIdUsuario(iduser);
             
     }
-    public String buscarPorNome(String nome)throws Exception{
+    public Perfil buscarPorNome(String nome)throws Exception{
             return this.buscarPorNome(nome);
     }
     }

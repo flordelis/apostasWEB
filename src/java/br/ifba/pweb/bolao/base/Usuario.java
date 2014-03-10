@@ -18,32 +18,33 @@ public class Usuario implements  Serializable{
     private String senha;
     private String permissao;
 
-    @Override
-    public String toString() {
-        return "Usuario{" + "id=" + id + ", login=" + login + ", senha=" + senha + ", permissao=" + permissao + '}';
+    public Usuario() {
+    }
+
+       
+    public Usuario(int id) {
+        this.id = id;
+    }
+    
+    
+    public Usuario(String login, String senha, String permissao) {
+        this.login = login;
+        this.senha = senha;
+        this.permissao = permissao;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setId(int id) {
         this.id = id;
     }
- 
-   
-   
-    
-    public int getId() {
-        return id;
-    }
- 
-        
+
     public String getLogin() {
         return login;
     }
 
-    public String getPermissao() {
-        return permissao;
-    }
-
-    
     public void setLogin(String login) {
         this.login = login;
     }
@@ -56,8 +57,19 @@ public class Usuario implements  Serializable{
         this.senha = senha;
     }
 
-    public void setPermissao(String permissao) {
-        this.permissao=permissao;
+    public String getPermissao() {
+        return permissao;
     }
 
- }
+    public void setPermissao(String permissao) {
+        this.permissao = permissao;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "id=" + id + ", login=" + login + ", senha=" + senha + ", permissao=" + permissao + '}';
+    }
+
+    
+}
+   

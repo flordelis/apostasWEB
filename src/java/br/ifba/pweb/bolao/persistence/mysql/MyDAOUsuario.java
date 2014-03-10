@@ -85,7 +85,7 @@ public class MyDAOUsuario implements IDAOUsuario{
             ResultSet rs= stmt.executeQuery();
             while(rs.next()){
                 u=new Usuario();
-                u.setId(rs.getInt("id"));
+                u.setId(rs.getInt("idusuario"));
                 u.setLogin(rs.getString("login"));
                 u.setSenha(rs.getString("senha"));
                 u.setPermissao(rs.getString("permissao"));
@@ -107,7 +107,7 @@ public class MyDAOUsuario implements IDAOUsuario{
 
     @Override
     public void atualizar(Usuario u) throws Exception {
-        String sql="UPDATE `usuario` SET `logion`=? `senha`=? WHERE `id`=?;";
+        String sql="UPDATE `usuario` SET `logion`=? `senha`=? WHERE `idusuario`=?;";
         try{
             PreparedStatement stmt = connection.prepareStatement(sql); 
             stmt.setString(1, u.getLogin());
@@ -128,14 +128,14 @@ public class MyDAOUsuario implements IDAOUsuario{
     public Usuario carregar(Integer codigo) throws Exception {
            
       Usuario u = new Usuario(); 
-      String SQL="SELECT * FROM `usuario` WHERE `id`=?";
+      String SQL="SELECT * FROM `usuario` WHERE `idusuario`=?";
         
        try{
             PreparedStatement stmt = connection.prepareStatement(SQL); 
             stmt.setInt(1, codigo);
             ResultSet rs= stmt.executeQuery();
             while(rs.next()){
-                u.setId(rs.getInt("id"));
+                u.setId(rs.getInt("idusuario"));
                 u.setLogin(rs.getString("login"));
                 u.setSenha(rs.getString("senha"));
                 u.setPermissao(rs.getString("permissao"));      
@@ -165,7 +165,7 @@ public class MyDAOUsuario implements IDAOUsuario{
             ResultSet rs= stmt.executeQuery();
             while(rs.next()){
                 Usuario u=new Usuario();
-                u.setId(rs.getInt("`id`"));
+                u.setId(rs.getInt("`idusuario`"));
                 u.setLogin(rs.getString("`login`"));
                 u.setSenha(rs.getString("`senha`"));
                 u.setPermissao(rs.getString("`permissao`"));   

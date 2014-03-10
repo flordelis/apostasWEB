@@ -10,11 +10,13 @@ import br.ifba.pweb.bolao.negocio.NPerfil;
 import br.ifba.pweb.bolao.base.Perfil;
 import br.ifba.pweb.bolao.base.Usuario;
 import br.ifba.pweb.bolao.negocio.NUsuario;
+import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.Set;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-
+import javax.servlet.http.HttpSession;
 /**
  *
  * @author lisy
@@ -25,10 +27,57 @@ public class UsuarioBn {
     
         private Usuario	usuario;
 	private String confirmarSenha;
+        private String login;
 	private Set<Usuario> lista;
-	private String	permissao;
 	private Perfil perfil;
+        public static final String USER_SESSION_KEY = "user";
 
+    public UsuarioBn() {
+        
+        this.usuario = new Usuario();
+        this.lista = new HashSet();
+    }
+        
+         public String validaUsuario() throws Exception {   
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        Usuario user = getUsuario();
+        if (user != null) {
+            if (!user.getSenha().equals(confirmarSenha)) {
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                                           "Login Falhou!",
+                                           "A senha não esta correta.");
+                context.addMessage(null, message);
+                return null;
+            }
+            
+            context.getExternalContext().getSessionMap().put(USER_SESSION_KEY, user);
+            if(user.getPermissao().equals("ROLE_USER"))
+            return "app-main-user";
+            else 
+             return "app-main-admin";    
+        } else {           
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Login Falhou!",
+                    "Usuario '"
+                    + login
+                    +
+                    "' não existe.");
+            context.addMessage(null, message);
+            return null;
+        }
+    }
+         
+      public String logout() {
+        HttpSession session = (HttpSession)
+             FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return "login";
+        
+    }    
+            
 	public String novo() {
 		this.usuario = new Usuario();
                 this.perfil= new Perfil();
@@ -59,7 +108,11 @@ public class UsuarioBn {
                         perfilRN.salvar(this.perfil);
 		}
              return "salvo com sucesso";   
-        }	
+        }
+     
+        
+    
+        
      public String excluir() throws Exception {
 		NUsuario usuarioRN = new NUsuario();
 		usuarioRN.excluir(this.usuario);
@@ -76,8 +129,13 @@ public class UsuarioBn {
 		return this.lista;
 	}
 
-	public Usuario getUsuario() {
-		return this.usuario;
+	public Usuario getUsuario() throws Exception {
+	 try {
+           NUsuario usuarioRN = new NUsuario();
+           return usuarioRN.buscarPorLogin(login); 
+        } catch (SQLException e) {
+            return null;
+        }
 	}
 
 	public void setUsuario(Usuario usuario) {
@@ -93,14 +151,6 @@ public class UsuarioBn {
 	}
 
 	
-	public String getPermissao() {
-		return permissao;
-	}
-
-	public void setPermissao(String permissao) {
-		this.permissao = permissao;
-	}
-
 	public Perfil getPerfil() {
 		return perfil;
 	}
@@ -108,4 +158,12 @@ public class UsuarioBn {
 	public void setPerfil(Perfil perfil) {
 		this.perfil = perfil;
 	}
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
 }

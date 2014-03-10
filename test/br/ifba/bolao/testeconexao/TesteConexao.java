@@ -8,6 +8,7 @@ package br.ifba.bolao.testeconexao;
 
 import br.ifba.pweb.bolao.base.Perfil;
 import br.ifba.pweb.bolao.base.Usuario;
+import br.ifba.pweb.bolao.control.UsuarioBn;
 import br.ifba.pweb.bolao.negocio.NPerfil;
 import br.ifba.pweb.bolao.negocio.NUsuario;
 import java.sql.Connection;
@@ -23,13 +24,16 @@ public class TesteConexao {
        Connection connection = new ConnexaoFactory().getConnection();
             System.out.println("Conexao Aberta");
             NUsuario un = new NUsuario();
-            Usuario u= un.buscarPorLogin("croupier");
+            Usuario u= un.buscarPorLogin("lisy");
+            UsuarioBn bn = new UsuarioBn();
+            bn.setLogin("lisy");
+            Usuario bu=bn.getUsuario();
             NPerfil perfilN = new NPerfil();
             Perfil perfil= perfilN.carregar(u.getId());
-            perfil.setUsuario(u);
-            perfilN.buscarPorNome("lisy");
+            //Perfil perfil2= perfilN.buscarPorNome("helis");
             System.out.println(perfil);
-        
+            System.out.println(u);
+            System.out.println(bu);
         connection.close();
         System.out.println("Conexao Fechada");
     }

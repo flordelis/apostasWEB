@@ -2,10 +2,19 @@
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
-        <Node id="restrito/menu_sistema.xhtml" x="150" y="150" zoom="true"/>
-        <Node id="index.xhtml" x="150" y="300" zoom="true"/>
-        <Node id="publico/rodape.xhtml" x="650" y="150" zoom="true"/>
-        <Node id="templates/principal.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="admin/menu_sistema.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="publico/rodape.xhtml" x="236" y="194" zoom="true"/>
+        <Node id="publico/comofazer.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="templates/templateexemp.xhtml" x="400" y="450" zoom="true"/>
+        <Node id="user/principal.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="templates/tp_externa.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="user/menu_user.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="publico/login.xhtml" x="589" y="83" zoom="true"/>
+        <Node id="index.xhtml" x="143" y="281" zoom="true"/>
+        <Node id="user/usuario.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="admin/principal.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="templates/tp_interno.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="templates/principal.xhtml" x="150" y="600" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>

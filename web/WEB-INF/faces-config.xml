@@ -8,10 +8,34 @@
             <base-name>/Bundle</base-name>
             <var>bundle</var>
         </resource-bundle>
-    </application>
+      </application>
     <managed-bean>
         <managed-bean-name>calculadoraApostaBean</managed-bean-name>
         <managed-bean-class>br.ifba.pweb.bolao.control.CalculadoraApostaBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
+   <managed-bean>
+       <managed-bean-name>usuarioBn</managed-bean-name>
+       <managed-bean-class>br.ifba.pweb.bolao.control.UsuarioBn</managed-bean-class>
+       <managed-bean-scope>request</managed-bean-scope>
+   </managed-bean> 
+   
+   <navigation-rule>
+   <navigation-case>
+            <from-outcome>app-main-user</from-outcome>
+            <to-view-id>/user/principal.xhtml</to-view-id>
+            <redirect/>
+   </navigation-case>
+    <navigation-case>
+            <from-outcome>app-main-admin</from-outcome>
+            <to-view-id>/admin/principal.xhtml</to-view-id>
+            <redirect/>
+   </navigation-case>
+   </navigation-rule>
+    <managed-bean>
+        <managed-bean-name>partidaBn</managed-bean-name>
+        <managed-bean-class>br.ifba.pweb.bolao.control.PartidaBn</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>
+

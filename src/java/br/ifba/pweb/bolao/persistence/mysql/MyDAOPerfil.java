@@ -52,7 +52,7 @@ public class MyDAOPerfil implements IDAOPerfil{
 
     @Override
     public void atualizar(Perfil p) throws Exception {
-       String sql="UPDATE `perfil` SET `credito`=?  where id=?";
+       String sql="UPDATE `perfil` SET `credito`=?  where idperfil=?";
                 
         try{
          PreparedStatement stmt = connection.prepareStatement(sql); 
@@ -71,22 +71,22 @@ public class MyDAOPerfil implements IDAOPerfil{
     }
 
     @Override
-    public Perfil carregar(int id) throws Exception {
+    public Perfil carregar(int idperfil) throws Exception {
         Perfil p= new Perfil();
-        String SQL="SELECT * FROM `perfil` WHERE `id`=?";
+        String SQL="SELECT * FROM `perfil` WHERE `idperfil`=?";
         try {
             
             
             PreparedStatement stmt = this.connection.prepareStatement(SQL);      
-            stmt.setInt(1, id);
+            stmt.setInt(1, idperfil);
             ResultSet rs = stmt.executeQuery();
             
             while(rs.next()){
                p.setNome(rs.getString("nome"));
                 IDAOUsuario  u= new MyDAOUsuario();
-               p.setUsuario(u.carregar(rs.getInt("usuario_id")));
-               p.setData_criacao(rs.getDate("datacriacao"));
-               p.setId(rs.getInt("id"));
+               p.setUsuario(u.carregar(rs.getInt("usuario_idperfil")));
+               p.setData_criacao(rs.getDate("dt_criacao"));
+               p.setId(rs.getInt("idperfil"));
                p.setCredito(rs.getInt("credito"));
             
             }
@@ -103,7 +103,7 @@ public class MyDAOPerfil implements IDAOPerfil{
     @Override
     public Perfil buscarPorIdUsuario(int iduser) throws Exception {
          Perfil p= new Perfil();
-        String SQL="Select p.`nome`, p.`datacriada`, p.`id`, p.`credito` from `perfil` p, `usuario` u WHERE p.`usuario_id`==u.`id_perfil`";
+        String SQL="Select * from `perfil`  WHERE usuario_id`=?";
         try {
             
             
@@ -111,10 +111,12 @@ public class MyDAOPerfil implements IDAOPerfil{
             stmt.setInt(1, iduser);
             ResultSet rs = stmt.executeQuery();
             
+            IDAOUsuario  usuarioN = new MyDAOUsuario();
             while(rs.next()){
+               p.setUsuario(usuarioN.carregar(iduser));
                p.setNome(rs.getString("nome"));
-               p.setData_criacao(rs.getDate("`p.datacriacao`"));
-               p.setId(rs.getInt("p.id"));
+               p.setData_criacao(rs.getDate("`p.dt_criacao`"));
+               p.setId(rs.getInt("p.idperfil"));
                p.setCredito(rs.getInt("p.credito"));
             
             }
@@ -131,20 +133,21 @@ public class MyDAOPerfil implements IDAOPerfil{
 
     @Override
     public Perfil buscarPorNome(String nome) throws Exception {
-         Perfil p= new Perfil();
-        String SQL="Select * FROM `perfil` WHERE `nome`= ?";
+         Perfil p= null;
+        String SQL="Select * FROM perfil WHERE nome = ?";
         try {
-            
             
             PreparedStatement stmt = this.connection.prepareStatement(SQL);      
             stmt.setString(1, nome);
             ResultSet rs = stmt.executeQuery();
-            
+            IDAOUsuario usuarioN = new MyDAOUsuario();
             while(rs.next()){
+               p=new Perfil();
+               p.setId(rs.getInt("idperfil"));
+               p.setUsuario(usuarioN.carregar(rs.getInt("usuario_id")));
                p.setNome(rs.getString("nome"));
-               p.setData_criacao(rs.getDate("`p.data_criada`"));
-               p.setId(rs.getInt("`p.id`"));
-               p.setCredito(rs.getInt("`p.credito`"));
+               p.setData_criacao(rs.getDate("dt_criacao"));
+               p.setCredito(rs.getInt("credito"));
             
             }
             
