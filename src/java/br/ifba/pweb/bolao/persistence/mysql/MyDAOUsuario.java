@@ -39,7 +39,7 @@ public class MyDAOUsuario implements IDAOUsuario{
          stmt.setString(1, u.getSenha());
          stmt.setString(1, u.getPermissao());
          
-         stmt.execute();
+         stmt.executeUpdate();
          stmt.close();
         }
         catch(SQLException e){
@@ -59,7 +59,7 @@ public class MyDAOUsuario implements IDAOUsuario{
          PreparedStatement stmt = connection.prepareStatement(sql); 
          stmt.setString(1, u.getLogin());
          stmt.setString(2, u.getSenha());
-         stmt.execute();
+         stmt.executeUpdate();
          stmt.close();
         }
         catch(SQLException e){

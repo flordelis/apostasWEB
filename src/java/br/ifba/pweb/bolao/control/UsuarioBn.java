@@ -57,7 +57,7 @@ public class UsuarioBn {
             if(user.getPermissao().equals("ROLE_USER"))
             return "app-main-user";
             else 
-             return "app-main-admin";    
+            return "app-main-admin";    
         } else {           
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "Login Falhou!",

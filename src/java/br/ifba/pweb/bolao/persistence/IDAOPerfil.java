@@ -19,7 +19,7 @@ public interface IDAOPerfil {
     public void salvar(Perfil p) throws Exception;
     public void atualizar(Perfil p)throws Exception;
     public Perfil carregar(int id)throws Exception;
-    public Perfil buscarPorIdUsuario(int iduser)throws Exception;
+    public Perfil buscarPorUsuario(Usuario user)throws Exception;
     public Perfil buscarPorNome(String nome)throws Exception;
    // public Set<Perfil> listar() throws Exception;  
 }
